@@ -1,0 +1,178 @@
+{%extends 'base.html'%}
+{% load static %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+{% block content %}
+
+<div class="container">
+    <h1>CONTRATOS</h1>
+        <form action="{% url 'buscar' %}">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="buscar_contrato" type="text" placeholder="Digite a matrícula do colaborador..."
+                        aria-label="Digite o nome" aria-describedby="basic-addon2">
+                    
+                            <button class="btn btn-outline-secondary" type="submit">
+                                Pesquisar
+                                <img class="busca__icone" src="{% static '/assets/icones/search.png' %}"
+                                alt="ícone de search">
+                            </button>
+                    </div>
+                </div>               
+            </div>               
+
+        </form>
+
+    <!-- Botão para Filtrar
+    <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a>
+     -->
+            
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">COLABORADOR</th>
+                    <th scope="col">CONTRATO N°</th>
+                    <th scope="col">PERIODO</th>
+                    <th scope="col">DATA INICIO</th>
+                    <th scope="col">ARQUIVO</th>
+                </tr>
+            </thead>    
+            <tbody>
+                {% for contrato in contratos %}
+                    <tr>
+                        <td>{{ contrato.colaborador }}</td>
+                        <td>{{ contrato.num_contrato }}</td>
+                        <td>{{ contrato.periodo }}</td>
+                        <td>{{ contrato.data_inicio }}</td>
+                        {% if contrato.contrato %}
+                            <td><a href="{{contrato.contrato.url}}" target="_blank">Abrir Contrato PDF</a></td>
+                        {% else %}
+                            <td><p>Sem contrato.</p></td>
+                        {% endif %}
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">nenhum contrato encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+
+<!-- 
+{% comment %} {%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+ <div class="container">
+    <h4>TERMO DE COMPROMISSO DE ESTÁGIO</h4>
+    <p>Aos 07  dias do mês de  Julho de 2023, nesta cidade, Estado de Pernambuco, celebram entre si este Termo de Compromisso de Estágio, 
+        convencionando as cláusulas e condições, que se seguem:</p>
+       
+    
+    <label for="">Unidade Concedente de Estágio
+        <p>Razão Social: CONSULT CENTER DO BRASIL
+            Endereço: RUA MARIA DA CONCEIÇÃO VIANA, nº. 1321 - Fone(s): (81) 4002 3636
+            Bairro: JARDIM ATLÂNTICO, CIDADE: OLINDA, Estado: PE, CEP: 5305-010
+            Código da Atividade nº.74.99-3-08 Nome da Atividade: Serviços de Cobrança e de Inform. Cadastrais
+            Inscrições: CNPJ/MF nº 05.795.928/0001-23
+            Representada por: 	João Kennedy Bandeira de Lima, Cargo: Diretor Executivo
+        </p>
+    </label>
+    
+    <label for="">Estagiario
+        <p>Nome: {{dados.colaborador.nome}}
+            RG Nº. 9.098.060 SDS/PE CPF: {{dados.colaborador.cpf}}
+            Residente: RUA CENTO E DOIS, Nº 685
+            Bairro: JARDIM PAULISTA Cidade: PAULISTA Estado: PE CEP: 53407-220
+            Aluno (a) regularmente matriculado (a) no 1º período do Curso de 
+            ADMINISTRAÇÃO DE EMPRESAS de nível: Superior</p>
+    </label>
+
+    <label>Instituição de Ensino
+        <p>Instituição de Ensino: FACULDADE UNINASSAU
+            endereço: Av. Senador Salgado Filho s/n      UF: PE
+            BAIRRO: Centro Cidade: PAULISTA Estado: PE  CEP: 53401-460
+            Inscrições: CNPJ/MF nº 04.986.320/0003-85
+            </p>
+    </label>
+    <p>CLÁUSULA 1ª
+        O presente TERMO DE COMPROMISSO DE ESTÁGIO, tem por objetivo conceder ao estagiário a oportunidade de aperfeiçoamento técnico-cultural e científico, que consolide na prática os ensinamentos teóricos recebidos na instituição de ensino, propiciando a promoção da integração ao mercado de trabalho de acordo com a Constituição Federal vigente, a Lei de Estágio nº 11.788/08 e a Lei Geral de Proteção de Dados (LGPD) nº 13.709/2018.
+        
+        CLÁUSULA 2ª
+        As atividades em ESTÁGIO, a serem cumpridas pelo (a) ESTAGIÁRIO (A), será das 09:00 às 12:00  e das 14:00 às 17:00 horas,  de segunda à sexta, totalizando 30 horas semanais durante o período eletivo e de comum acordo durante o período de férias;
+        b)	a jornada de atividade em ESTÁGIO deverá compatibilizar-se com o horário escolar do(a) ESTAGIÁRIO(A) e com o horário da UNIDADE CONCEDENTE;
+        c)	nos períodos de férias escolares, a jornada de estágio será estabelecida de comum acordo entre o(a) ESTAGIÁRIO(A) e a UNIDADE CONCEDENTE, com a interveniência da INSTITUIÇÃO DE ENSINO;
+        
+        d)	este TERMO DE COMPROMISSO DE ESTÁGIO terá vigência de 07.07.2023 a 06.01.2024, podendo ser denunciado a qualquer tempo, unilateralmente, mediante comunicação escrita, com antecedência prévia de 10 (dez) dias, endereçada aos demais signatários deste Termo.
+        
+        e) O ESTAGIÁRIO será supervisionado na empresa pelo (a)  Sr (a) Matheus Henrique Cedrim Santos (Gerente de Departamento) e avaliado semestralmente através de relatório, que será enviando à instituição de ensino.
+        
+        f) As atividades em ESTÁGIO, a serem cumpridas pelo ESTAGIÁRIO (A), serão desenvolvidas no departamento Financeiro, exercendo as seguintes funções: Auxiliar nas rotinas administrativas, dar assistência à gerência, auxiliar nas análises de créditos, dar suporte às análises de documentos, acompanhar o relacionamento com os clientes coorporativos e relações interpessoais. 
+        O (A) ESTAGIÁRIO (A) poderá exercer as atividades do estágio em qualquer outro departamento, além dos definidos à alínea “a” do caput desta cláusula, desde que obedecidos a especialidade do Estágio e o Regulamento do Curso já referido.
+        
+        CLÁUSULA 3ª
+        Constituem motivos para a INTERRUPÇÃO AUTOMÁTICA DA VIGÊNCIA ou rescisão plena jure do presente TERMO DE COMPROMISSO DE ESTÁGIO:
+        
+        I   - a conclusão, desistência ou abandono do curso e o trancamento de matrícula bem como a perda do vínculo, por qualquer outra forma, do(a) ESTAGIÁRIO(A) com a INSTITUIÇÃO DE ENSINO
+        II  -	o não-cumprimento do convencionado neste TERMO DE COMPROMISSO bem como no ACORDO DE COOPERAÇÃO do qual decorre.
+        
+        
+        CLÁUSULA 4ª
+        Nos termos do Art. 3o da Lei no 11.788/08, o estagio não cria vinculo empregatício de qualquer natureza, ressalvando o que dispuser a legislação previdenciária, encontrando-se o estagiário (a) segurado contra acidentes pessoais na seguradora CAPEMISA Apólice de Nº. 15632719 durante o período de vigência do estagio. 
+        
+        CLÁUSULA 5ª
+        No desenvolvimento do ESTÁGIO ora compromissado, caberá à UNIDADE CONCEDENTE:
+        a)	Proporcionar ao (à) ESTAGIÁRIO (A) atividades de aprendizagem social, profissional e cultural, compatíveis com o Contexto Básico da Profissão ao qual seu Curso se refere, obedecido o Regulamento deste, mencionado à Cláusula primeira;
+        b)	Proporcionar ao(à) ESTAGIÁRIO(A) condições de treinamento prático e de relacionamento humano;
+        c)	Proporcionar à INSTITUIÇÃO DE ENSINO, sempre que necessário, subsídios que possibilitem o acompanhamento, a supervisão e a avaliação do ESTÁGIO;
+        d)	Anexar a 1ª via deste TCE ao ACORDO DE COOPERAÇÃO celebrado com a INSTITUIÇÃO DE ENSINO;
+        e)	Comunicar à INSTITUIÇÃO DE ENSINO a interrupção, conclusão ou as eventuais modificações do convencionado neste TERMO DE COMPROMISSO, submetendo, porém, estas últimas à prévia aprovação da INSTITUIÇÃO DE ENSINO.
+        
+        CLÁUSULA 7ª
+        No desenvolvimento do ESTÁGIO ora compromissado, caberá ao (à) ESTAGIÁRIO (A):
+        
+        a)	Cumprir - com todo o empenho e interesse - toda a programação estabelecida para seu ESTÁGIO, observadas rigorosamente as disposições constantes do Regulamento do Curso, mencionado à cláusula 1ª;
+        b)	Observar as normas internas da UNIDADE CONCEDENTE e a elas obedecer;
+        c)	Comunicar à UNIDADE CONCEDENTE e à INSTITUIÇÃO DE ENSINO qualquer fato relevante sobre seu ESTÁGIO, em especial as causas referidas no inciso I, da cláusula 3ª;
+        d)	Elaborar relatório (s) sobre seu ESTÁGIO, na forma, prazo e padrões estabelecidos e entregá-lo à Instituição de Ensino, quando solicitado à Unidade Concedente, para posterior análise; 
+        e)	Comunicar à INSTITUIÇÃO DE ENSINO a interrupção, conclusão ou as eventuais modificações do convencionado neste TERMO DE COMPROMISSO.
+        f) Realizar abertura de Conta Universitária, ficando sob sua responsabilidade o encerramento da mesma, no término do contrato de estágio. A empresa ficará isenta da abertura e encerramento da conta do estagiário.
+        
+        Parágrafo Único.
+        O (A) ESTAGIÁRIO (A) responderá pelas perdas e danos conseqüentes do seu inadimplemento, sem prejuízo de outras combinações legais e regimentais, inclusive exclusão do estágio.
+        
+        CLÁUSULA 8ª
+        a) O ESTAGIÁRIO receberá da UNIDADE CONCEDENTE 01 (uma) bolsa, no valor de R$ 848,40 (oitocentos e quarenta e oito reais e quarenta centavos) e auxílio passagem, no valor de R$ 4,10 (quatro reais e dez centavos) o dia.
+        b) O estagiário poderá receber adicional por produtividade e variáveis.
+        
+        CLÁUSULA 9ª
+        A INSTITUIÇÃO DE ENSINO, no uso da competência que lhe atribui na Lei de Estágio n° 11.788/08, declara concordar com as condições de realização do estágio de que trata o presente TERMO DE COMPROMISSO, oferecido pela UNIDADE CONCEDENTE, pelo que anui e reconhece a validade das disposições ora estabelecidas.
+        
+        CLÁUSULA 10ª
+        O Estagiário/Aluno declara que têm plena ciência do tratamento dos seus dados pessoais, exclusivamente para a consecução das atividades institucionais inerentes ao estágio, objeto deste instrumento, em cumprimento de obrigações legais/regulatórias, perante os órgãos competentes, nos moldes da Lei 13.709/2018 – Lei Geral de Proteção de Dados.
+        
+        1.  A Unidade Concedente do Estágio declara estar ciente e concordar com as regras e princípios relacionados à privacidade e proteção aos dados pessoais constantes da Lei 13.709/18 – Lei Geral de Proteção de Dados Pessoais, que porventura sejam relacionados e tratados em função da relação criada neste negócio jurídico.
+        
+        2. A Unidade Concedente do Estágio compromete-se a garantir que os dados pessoais estejam acessíveis somente às pessoas autorizadas, sendo seu tratamento restrito tão somente ao atendimento da finalidade alcançada por este negócio jurídico, ficando vedada a utilização inadequada das informações coletados neste ato. 
+        
+        3. No que tange ao tratamento dos dados pessoais do estagiário/aluno, a Instituição de Ensino e Unidade Concedente do Estágio, declaram que atuarão dentro de um conjunto de boas práticas e métodos voltados para a preservação da confidencialidade e integridade dos dados e informações tratados no bojo desta relação, observando sobre tudo a base legal (Art. 7º, II da Lei 13.709/18), finalidade e adequação do tratamento das informações coletadas. 
+        
+        4. A Instituição de Ensino e Unidade Concedente do Estágio se obrigam a garantir a observância dessa cláusula na sua relação com colaboradores, prepostos, prestadores de serviço e terceiros, envolvidos para a fiel execução desse termo. O descumprimento da presente cláusula ensejará a imediata rescisão deste Termo, sem prejuízo da responsabilidade civil ou criminal.
+        
+        
+        CLÁUSULA 11ª
+        De comum acordo, as partes elegem o Foro da Justiça Federal de Pernambuco, renunciando, desde logo, a qualquer outro, por mais privilegiado que seja, para dirimir qualquer questão que se originar deste TERMO DE COMPROMISSO DE ESTÁGIO e que não possa ser resolvida amigavelmente.
+         
+        E, por estarem de inteiro e comum acordo com as condições e dizeres deste TERMO DE COMPROMISSO, as partes assinam-no em 03 (três) vias de igual teor, com as testemunhas abaixo, a tudo presentes, cabendo a 1ª via à UNIDADE CONCEDENTE, a 2ª ao (à) ESTAGIÁRIO (a) e a 3ª à INSTITUIÇÃO DE ENSINO.
+        </p>
+    
+        
+</div> 
+
+{% endblock %} 
+{% endcomment %} -->

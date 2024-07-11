@@ -1,0 +1,69 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <h1>COLABORADORES</h1>
+
+        <form action="{% url 'buscar' %}">
+            <div class="form-group">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
+                        aria-label="Digite o nome" aria-describedby="basic-addon2">
+                    
+                            <button class="btn btn-outline-secondary" type="submit">
+                                Pesquisar
+                                <img class="busca__icone" src="{% static '/assets/icones/search.png' %}"
+                                alt="ícone de search">
+                            </button>
+                    </div>
+                </div>               
+            </div>               
+
+            </form>
+
+    <!-- Botão para adicionar novo colaborador -->
+    <a href="{% url 'colaborador-create' %}" class="btn btn-primary mb-3">Adicionar colaborador</a>
+    <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a>
+    <a href="{% url 'contrato' %}" class="btn btn-primary mb-3">Contratos</a>
+    <h6>Total de Colaboradores: {{quantidade}}</h6>
+            
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">COLABORADOR</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">DATA NASC.</th>
+                    <th scope="col">MATRÍCULA</th>
+                    <th scope="col">EDITAR</th>
+                </tr>
+            </thead>    
+            <tbody>
+                {% for colaborador in colaboradores_list %}
+                    <tr>
+                        <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
+                        <td>{{ colaborador.cpf }}</td>
+                        <td>{{ colaborador.data_nascimento }}</td>
+                        <td>{{ colaborador.matricula }}</td>
+                        <td><a href="/colaborador/{{colaborador.id}}/update/"><span><i class="fas fa-edit"></i></span></td>                
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4">nenhum colaborador encontrado.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+    </table>
+</div>
+
+{% endblock %}
+
+
+    <!-- Filtros por classificação -->
+    {% comment %} <a href="{% url 'filtro' 'FUNCIONARIO' %}" class="btn btn-primary mb-3">Funcionários</a> {% endcomment%}
+    {% comment %} <a href="{% url 'filtro' 'ESTAGIARIO' %}" class="btn btn-primary mb-3">Estagiários</a> {% endcomment%}
+    
+
+        

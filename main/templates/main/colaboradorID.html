@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{%load static%}
+
+{% block title %}Detalhes do Colaborador{% endblock  %}
+
+{% block content %}
+<h3>Dados do Colaborador</h3>
+    <div class="container">
+
+      {% if colaborador.foto == "" or colaborador.foto == null %}
+        <img class="rounded float-right foto" src="{% static '/assets/img/not-found.jpg'%}" alt="foto">
+      {% else %}
+        <img class="rounded float-right foto" src="{{ colaborador.foto.url }}" alt="foto do colaborador">
+      {% endif %}
+
+        <table class="table table-striped">
+            <tr>
+              <th>NOME:</th>
+              {% comment %} <td>{{ colaborador.nome }}</td> {% endcomment %}
+              <td><a href="/contrato_view_for_name/{{colaborador.nome}}">{{ colaborador.nome }}</td>
+            </tr>
+            <tr>
+              <th>CPF:</th>
+              <td>{{ colaborador.cpf }}</td>
+            </tr>
+            <tr>
+              <th>DATA NASCIMENTO:</th>
+              <td>{{ colaborador.data_nascimento }}</td>
+            </tr>
+            <tr>
+              <th>Matricula</th>
+              <td>{{colaborador.matricula}}</td>
+            </tr>
+            <tr>
+              <th>DEPARTAMENTO:</th>
+              <td>{{colaborador.departamento}}</td>
+            </tr>
+            <tr>
+              <th>CLASSIFICAÇÃO:</th>
+              <td>{{colaborador.classificacao}}</td>
+            </tr>
+            <tr>
+                <th>DATA DE ENTRADA:</th>
+                <td>{{colaborador.data_entrada}}</td>
+              </tr>
+              <tr>
+                <th>DATA DE SAÍDA:</th>
+                <td>{{colaborador.data_saida}}</td>
+              </tr>
+              <tr>
+                <th>TELEFONE:</th>
+                <td>{{colaborador.telefone}}</td>
+              </tr>
+              <tr>
+                <th>TEL. AUXILIAR:</th>
+                <td>{{colaborador.tel_auxiliar}}</td>
+              </tr>
+              <tr>
+                <th>E-MAIL:</th>
+                <td>{{colaborador.email}}</td>
+              </tr>
+            </table>
+
+            <div id="noprint" class="editPrint">
+              <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
+              <div><a href="/colaborador/{{colaborador.id}}/update/"><button class="btn btn-primary">Editar</button></div>                
+              <div><a href="{% url 'contrato-create' %}" class="btn btn-primary mb-3">Novo contrato</a></div>                
+            </div>
+    </div>
+{% endblock  %}
+

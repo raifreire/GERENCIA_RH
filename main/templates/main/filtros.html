@@ -1,0 +1,80 @@
+{%extends 'base.html'%}
+
+{% block content %}
+
+<div class="container">
+    <h1>COLABORADORES</h1>
+    <!-- filtros -->
+    <div class="form_filtro">
+        <form method="POST" action="{% url 'filtros' %}">
+            {% csrf_token %}
+            <div class="form_select" id="noprint">
+                <select name="departamento" id="departamento" class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg">
+                    <option value="">Selecione o Departamento.</option>
+                    <option value="FINACEIRO">FINACEIRO</option>
+                    <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
+                    <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
+                    <option value="COBRANCA">COBRANÇA</option>
+                    <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
+                    <option value="REAL_CREDIT">REAL CREDIT</option>
+                    <option value="RELACIONAMENTO">RELACIONAMENTO</option>
+                    <option value="COMERCIAL">COMERCIAL</option>
+                    <option value="RH">RH</option>
+                    <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
+                    <option value="JURIDICO">JURIDICO</option>
+                    <option value="CONTABIL">CONTÁBIL</option>
+                    <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
+                    <option value="SUPORTE_ADM">SUPORTE ADM</option>
+                    <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
+                    <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
+                    <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
+                    <option value="INFORMATICA">INFORMÁTICA</option>
+                </select>
+                <select name="classificacao" id="classificacao" class="form-select form-select-lg mb-3"
+                    aria-label=".form-select-lg">
+                    <option value="">Selecione a classificação.</option>
+                    <option value="FUNCIONARIO">FUNCIONÁRIO</option>
+                    <option value="ESTAGIARIO">ESTAGIÁRIO</option>
+                    <option value="MEI">MEI</option>
+                </select>
+
+                <button class="btn btn-primary" type="submit">Filtrar</button>
+            </div>
+        </form>
+    </div>
+    <h6>Total de Colaboradores: {{quantidade}}</h6>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Colaborador</th>
+                <th scope="col">Cpf</th>
+                <th scope="col">Data Nasc.</th>
+                <th scope="col">Mátricula</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for colaborador in colaboradores_list %}
+            <tr>
+                <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
+                <td>{{ colaborador.cpf }}</td>
+                <td>{{ colaborador.data_nascimento }}</td>
+                <td>{{ colaborador.matricula }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4">nenhum colaborador encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div id="noprint" class="editPrint">
+        <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
+    </div>
+
+</div>
+
+
+{% endblock %}
