@@ -29,7 +29,7 @@ def colaborador_create_view(request):
     '''
     Função para criar os colaboradores'''
     if request.method == 'POST':
-        form = ColaboradorForm(request.POST)
+        form = ColaboradorForm(request.POST,request.FILES)
         if form.is_valid():
             colaborador = form.save(commit=False)
             colaborador.user = request.user
