@@ -71,7 +71,7 @@ class Colaborador(models.Model):
     ativo_inativo = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE)
+    user = models.ForeignKey(get_user_model(),on_delete=models.CASCADE,related_name="colaborador")
 
     def __str__(self):
         return self.nome
@@ -88,7 +88,7 @@ class Contrato(models.Model):
     data_inicio = models.DateField(default=datetime.now,blank=False)
     data_termino = models.DateField(blank=True, null=True)
     contrato = models.FileField(upload_to ="contratos")
-    colaborador = models.ForeignKey(Colaborador,on_delete=models.CASCADE,related_name="contrato")
+    colaborador = models.ForeignKey(Colaborador, on_delete=models.CASCADE,related_name="contrato")
 
     def __str__(self):
         return self.periodo

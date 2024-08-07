@@ -9,7 +9,7 @@
             <div class="form-group">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" name="buscar_contrato" type="text" placeholder="Digite a matrícula do colaborador..."
+                        <input class="form-control" name="buscar_contrato" type="text" placeholder="Digite o nome do colaborador..."
                         aria-label="Digite o nome" aria-describedby="basic-addon2">
                     
                             <button class="btn btn-outline-secondary" type="submit">
@@ -34,6 +34,7 @@
                     <th scope="col">CONTRATO N°</th>
                     <th scope="col">PERIODO</th>
                     <th scope="col">DATA INICIO</th>
+                    <th scope="col">DATA TERMINO</th>
                     <th scope="col">ARQUIVO</th>
                 </tr>
             </thead>    
@@ -44,8 +45,9 @@
                         <td>{{ contrato.num_contrato }}</td>
                         <td>{{ contrato.periodo }}</td>
                         <td>{{ contrato.data_inicio }}</td>
+                        <td>{{ contrato.data_termino }}</td>
                         {% if contrato.contrato %}
-                            <td><a href="{{contrato.contrato.url}}" target="_blank">Abrir Contrato PDF</a></td>
+                            <td><a href="{{contrato.contrato.url}}" target="_blank">Abrir Contrato</a></td>
                         {% else %}
                             <td><p>Sem contrato.</p></td>
                         {% endif %}

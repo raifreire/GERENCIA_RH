@@ -12,9 +12,9 @@ def colaboradorView(request):
     '''
     if not request.user.is_authenticated:
         return redirect('login')
-
-    colaborador_list = Colaborador.objects.all().filter(user=request.user)
-    contador = Colaborador.objects.count()
+   
+    colaborador_list = Colaborador.objects.all().filter(user=request.user).filter(ativo_inativo=True)
+    contador = Colaborador.objects.filter(ativo_inativo=True).count()
     return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list,'quantidade':contador})
 
 
@@ -23,6 +23,7 @@ def colaboradorIDview(request, id):
     Função para detalhar os colaboradores pelo ID'''
     colaborador = get_object_or_404(Colaborador, pk=id)
     return render(request, 'main/colaboradorID.html', {'colaborador': colaborador})
+
 
 @login_required
 def colaborador_create_view(request):
@@ -40,13 +41,22 @@ def colaborador_create_view(request):
 
     return render(request, 'main/form_colaborador.html', {'form': form})
 
-class ColaboradorUpdateView(UpdateView):
-    '''
-    Função para atualizar os colaboradores'''
-    model = Colaborador
-    form_class = ColaboradorForm
-    template_name = 'main/form_colaborador.html'
-    success_url = reverse_lazy('colaborador-lista')
+
+def colaboradorUpdateView(request, pk):
+    colaborador = get_object_or_404(Colaborador, pk=pk)
+    if request.method == "POST":
+        form = ColaboradorForm(request.POST, instance=colaborador)
+        if form.is_valid():
+            colaborador = form.save(commit=False)
+            if colaborador.data_saida:
+                colaborador.ativo_inativo = False
+            colaborador.save()
+            return redirect(reverse_lazy('colaborador-lista'))
+    else:
+        form = ColaboradorForm(instance=colaborador)
+    
+    return render(request, 'main/form_colaborador.html', {'form': form})
+
 
 def deleteColaborador(request, id):
     '''
@@ -56,24 +66,27 @@ def deleteColaborador(request, id):
     return redirect('/')
 
 
-# def filtro(request, classificacao):
-#     colaborador_list = Colaborador.objects.filter(classificacao=classificacao)
-#     return render(request, 'main/colaborador.html',{'colaboradores_list': colaborador_list})
-
 def buscar(request):
-    # if not request.user.is_authenticated:
-    #     messages.error(request, 'Usuário não logado')
-    #     return redirect('login')
-
     colaborador_list = Colaborador.objects.all()
     
     if "buscar" in request.GET:
         nome_a_buscar = request.GET['buscar']
         if nome_a_buscar:
-            colaborador_list = colaborador_list.filter(nome__icontains=nome_a_buscar)
+            colaboradores = Colaborador.objects.filter(ativo_inativo=True)
+            colaborador_list = colaboradores.filter(nome__icontains=nome_a_buscar)
             return render(request, "main/colaborador.html", {"colaboradores_list": colaborador_list})
         else:
             return render(request, 'main/contrato.html')  
+    
+    if "buscar_desligados" in request.GET:
+        nome_a_buscar = request.GET['buscar_desligados']
+        if nome_a_buscar:
+            colaboradores_desligados = Colaborador.objects.filter(ativo_inativo=False)
+            colaboradores_desligados_list = colaboradores_desligados.filter(nome__icontains=nome_a_buscar)
+            print(colaboradores_desligados)
+            return render(request, "main/colaborador_desligado.html", {"colaboradores_list": colaboradores_desligados_list})
+        else:
+            return render(request, 'main/contrato.html')
         
     if "buscar_contrato" in request.GET:
         nome_a_buscar = request.GET['buscar_contrato']
@@ -123,7 +136,6 @@ def contrato_create_view(request):
             contrato.user = request.user
             contrato.save()
             contrato=request.FILES.get('contrato')
-            print(contrato)
             return redirect(reverse('colaborador-lista'))
     else:
         form = ContratoForm()
@@ -136,13 +148,22 @@ def contrato_view(request ):
     return render(request,'main/contrato.html',{'contratos':contratos})
 
 
-#TODO:preciso exibir nos detalhes do colaborador os contratos associados a ele
-#TODO:preciso filtrar os contratos por nome do colaborador dentro da pagina contrato
-#TODO:criar aba desligados com data da saida e filtros
-#TODO: data de encerramento do contrato na pag contratos
-
 def contrato_view_for_name(request, name):
     '''
     Função para detalhar os contratos pelo nome do colaborador'''
     contratos = Contrato.objects.filter(colaborador__nome=name)
     return render(request,'main/contrato.html',{'contratos':contratos})
+
+
+def colaborador_desligado_view(request):
+    '''Função para listar os colaboradores desligados'''
+    colaboradores = Colaborador.objects.filter(ativo_inativo=False)
+    contador = Colaborador.objects.filter(ativo_inativo=False).count()
+    return render(request,'main/colaborador_desligado.html',{'colaboradores_list':colaboradores, 'quantidade':contador})
+
+
+
+#TODO:preciso exibir nos detalhes do colaborador os contratos associados a ele
+#TODO:preciso filtrar os contratos por nome do colaborador dentro da pagina contrato
+#TODO:criar aba desligados com data da saida e filtros
+#TODO: criar aba de relatorios de entrada e saida de estagiarios, ferias, renovacao.

@@ -4,13 +4,13 @@
 {% block content %}
 
 <div class="container">
-    <h1>COLABORADORES</h1>
+    <h1>COLABORADORES DESLIGADOS</h1>
 
         <form action="{% url 'buscar' %}">
             <div class="form-group">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
+                        <input class="form-control" name="buscar_desligados" type="text" placeholder="Digite o nome do colaborador..."
                         aria-label="Digite o nome" aria-describedby="basic-addon2">
                     
                             <button class="btn btn-outline-secondary" type="submit">
@@ -28,7 +28,6 @@
     <a href="{% url 'colaborador-create' %}" class="btn btn-primary mb-3">Adicionar colaborador</a>
     <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a>
     <a href="{% url 'contrato' %}" class="btn btn-primary mb-3">Contratos</a>
-    <a href="{% url 'colaborador-desligado' %}" class="btn btn-primary mb-3">Desligados</a>
     <h6>Total de Colaboradores: {{quantidade}}</h6>
             
         <table class="table table-striped">
@@ -36,7 +35,8 @@
                 <tr>
                     <th scope="col">COLABORADOR</th>
                     <th scope="col">CPF</th>
-                    <th scope="col">DATA NASC.</th>
+                    <th scope="col">DATA ENTRADA.</th>
+                    <th scope="col">DATA SAIDA.</th>
                     <th scope="col">MATRÍCULA</th>
                     <th scope="col">EDITAR</th>
                 </tr>
@@ -46,7 +46,8 @@
                     <tr>
                         <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
                         <td>{{ colaborador.cpf }}</td>
-                        <td>{{ colaborador.data_nascimento }}</td>
+                        <td>{{ colaborador.data_entrada }}</td>
+                        <td>{{ colaborador.data_saida }}</td>
                         <td>{{ colaborador.matricula }}</td>
                         <td><a href="/colaborador/{{colaborador.id}}/update/"><span><i class="fas fa-edit"></i></span></td>                
                     </tr>
