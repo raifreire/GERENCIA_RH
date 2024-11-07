@@ -3,10 +3,10 @@
 {% block content %}
 
 <div class="container">
-    <h1>COLABORADORES</h1>
+    <h1>COLABORADORES DESLIGADOS</h1>
     <!-- filtros -->
     <div class="form_filtro">
-        <form method="POST" action="{% url 'filtros' %}">
+        <form method="POST" action="{% url 'filtro_desligados' %}">
             {% csrf_token %}
             <div class="form_select" id="noprint">
                 <select name="departamento" id="departamento" class="form-select form-select-lg mb-3"
