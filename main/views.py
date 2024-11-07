@@ -185,17 +185,7 @@ def colaborador_desligado_view(request):
         return render(request,'main/colaborador_desligado.html',{'colaboradores_list':colaboradores, 'quantidade':contador})
 
 
-
-
-######################## DONE ####################################################
-#TODO:preciso exibir nos detalhes do colaborador os contratos associados a ele
-#TODO:preciso filtrar os contratos por nome do colaborador dentro da pagina contrato
-#TODO:criar aba desligados com data da saida e filtros
-#TODO:criar relatorios de entrada e saida de estagiarios
-######################## DONE ####################################################
-
 ######################## TO DO ####################################################
 #TODO: criar relatorios de ferias, renovacao.
 # usar timedelta para somatorio de datas?
 ######################## TO DO ####################################################
-

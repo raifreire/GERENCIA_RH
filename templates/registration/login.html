@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load crispy_forms_tags %}
 
 {% block title %}Entrar{% endblock %}
 
-{% block content %}
+{% block 'body' %}
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card auth-card">
+            <br>
+            <img class="h-8 w-auto rounded-md" src="{% static 'assets/icons/logo_icon.svg' %}">
+            <br>
             <h4 class="card-title text-center">Bem-vindo</h4>
+              
             <form method="POST">
                 {%csrf_token%}
                 <input type="hidden" name="next" value="{{ next }}">
@@ -19,4 +24,6 @@
         </div>
     </div>
 </div>
+<br>
+<br>
 {% endblock %}

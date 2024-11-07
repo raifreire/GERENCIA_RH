@@ -1,8 +1,8 @@
 {%extends 'base.html'%}
 {% load static %}
 
-{% block content %}
-
+{% block 'body' %}
+{% include "partials/navbar.html" %}
 <div class="container">
     <h1>COLABORADORES</h1>
 
@@ -25,10 +25,10 @@
             </form>
 
     <!-- Botão para adicionar novo colaborador -->
-    <a href="{% url 'colaborador-create' %}" class="btn btn-primary mb-3">Adicionar colaborador</a>
-    <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a>
-    <a href="{% url 'contrato' %}" class="btn btn-primary mb-3">Contratos</a>
-    <a href="{% url 'colaborador-desligado' %}" class="btn btn-primary mb-3">Desligados</a>
+    {% comment %} <a href="{% url 'colaborador-create' %}" class="btn btn-primary mb-3">Adicionar colaborador</a> {% endcomment %}
+    {% comment %} <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a> {% endcomment %}
+    {% comment %} <a href="{% url 'contrato' %}" class="btn btn-primary mb-3">Contratos</a> {% endcomment %}
+    {% comment %} <a href="{% url 'colaborador-desligado' %}" class="btn btn-primary mb-3">Desligados</a> {% endcomment %}
     <h6>Total de Colaboradores: {{quantidade}}</h6>
             
         <table class="table table-striped">
