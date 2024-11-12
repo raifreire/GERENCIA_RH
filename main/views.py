@@ -3,9 +3,9 @@ from .forms import ColaboradorForm, ContratoForm
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.decorators import login_required
+from rolepermissions.decorators import has_role_decorator
 
-@login_required #define que o usuario esteja logado, para ter acesso as informações. Deve-se colocar em todas as funcões privadas.
+
 def colaboradorView(request):
     '''
     Função para listar os colaboradores
@@ -13,9 +13,10 @@ def colaboradorView(request):
     if not request.user.is_authenticated:
         return redirect('login')
    
-    colaborador_list = Colaborador.objects.all().filter(user=request.user).filter(ativo_inativo=True)
+    colaborador_list = Colaborador.objects.all().filter(ativo_inativo=True)
     contador = Colaborador.objects.filter(ativo_inativo=True).count()
-    return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list,'quantidade':contador})
+    user=request.user.username
+    return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list,'quantidade':contador,'username': user})
 
 
 def colaboradorIDview(request, id):
@@ -24,8 +25,7 @@ def colaboradorIDview(request, id):
     colaborador = get_object_or_404(Colaborador, pk=id)
     return render(request, 'main/colaboradorID.html', {'colaborador': colaborador})
 
-
-@login_required
+@has_role_decorator('admin')
 def colaborador_create_view(request):
     '''
     Função para criar os colaboradores'''
@@ -41,7 +41,7 @@ def colaborador_create_view(request):
 
     return render(request, 'main/form_colaborador.html', {'form': form})
 
-
+@has_role_decorator('admin')
 def colaboradorUpdateView(request, pk):
     colaborador = get_object_or_404(Colaborador, pk=pk)
     if request.method == "POST":
@@ -57,7 +57,7 @@ def colaboradorUpdateView(request, pk):
     
     return render(request, 'main/form_colaborador.html', {'form': form})
 
-
+@has_role_decorator('admin')
 def deleteColaborador(request, id):
     '''
     Função para deletar os colaboradores'''
@@ -135,7 +135,7 @@ def filtrar_colaborador(request):
     else:
         return render(request, 'main/filtros.html')
     
-
+@has_role_decorator('admin')
 def contrato_create_view(request):
     if request.method == 'POST':
         form = ContratoForm(request.POST,request.FILES)

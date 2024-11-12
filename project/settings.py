@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'accounts',
+    'rolepermissions',
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,5 @@ LOGOUT_REDIRECT_URL = '/accounts/login'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ROLEPERMISSIONS_MODULE = 'project.roles'
