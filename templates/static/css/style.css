@@ -34,7 +34,7 @@ body {
   
   /* Definição de botões */
   .button {
-    display: inline-block;
+    display: inline;
     padding: 12px 24px;
     font-size: 16px;
     font-weight: bold;
@@ -71,11 +71,27 @@ body {
     border-color: #007bff;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
-  .form_filtro{
-    width: 100%;
+  .filtroform {
     display: flex;
-    align-items: center;
-  }
+    gap: 20px;
+    margin: 20px 0px 20px 0px;
+ }
+ .item1{
+  width: 40%;
+  display: inline-flex;
+  gap: 20px;
+ }
+ .item2 {
+  width: 45%;
+  display: inline-flex;
+  gap: 3px;
+ }
+ .item2 input{
+  max-width: 200px;
+ }
+ .item2 button{
+  margin-left: 10px;
+ }
   select{
     width: max-content;
     padding: 5px;
@@ -90,6 +106,8 @@ body {
   }
   .busca__icone{
     max-width: 20px;
+    height: 20px;
+    display: inline;
   }
   .link{
     text-decoration: none;
@@ -102,7 +120,7 @@ body {
     font-size: 20px;
 }
   .fas.fa-edit{
-    color: #13c43f;
+    color: #44556f;
     cursor:pointer;
     margin: 5px;
     font-size: 20px;

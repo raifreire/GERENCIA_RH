@@ -10,13 +10,13 @@
         <form action="{% url 'buscar' %}">
             <div class="form-group">
                 <div class="form-group">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                         <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
-                        aria-label="Digite o nome" aria-describedby="basic-addon2">
+                        aria-label="Digite o nome" aria-describedby="">
                     
-                            <button class="btn btn-outline-secondary" type="submit">
+                            <button class="btn btn-outline-secondary btn_search" type="submit">
                                 Pesquisar
-                                <img class="busca__icone" src="{% static '/assets/icones/search.png' %}"
+                                <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
                                 alt="ícone de search">
                             </button>
                     </div>

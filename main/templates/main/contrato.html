@@ -1,6 +1,6 @@
 {%extends 'base.html'%}
 {% load static %}
-{% comment %} <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"> {% endcomment %}
+
 {% block 'body' %}
 {% include "partials/navbar.html" %}
 
@@ -15,7 +15,7 @@
                     
                             <button class="btn btn-outline-secondary" type="submit">
                                 Pesquisar
-                                <img class="busca__icone" src="{% static '/assets/icones/search.png' %}"
+                                <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
                                 alt="ícone de search">
                             </button>
                     </div>
@@ -32,6 +32,7 @@
             <thead>
                 <tr>
                     <th scope="col">COLABORADOR</th>
+                    <th scope="col">ID</th>
                     <th scope="col">CONTRATO N°</th>
                     <th scope="col">PERIODO</th>
                     <th scope="col">DATA INICIO</th>
@@ -42,7 +43,8 @@
             <tbody>
                 {% for contrato in contratos %}
                     <tr>
-                        <td>{{ contrato.colaborador }}</td>
+                        <td><a href="/contrato/{{contrato.id}}/update">{{ contrato.colaborador }}</td>
+                        <td>{{ contrato.id }}</td>
                         <td>{{ contrato.num_contrato }}</td>
                         <td>{{ contrato.periodo }}</td>
                         <td>{{ contrato.data_inicio }}</td>

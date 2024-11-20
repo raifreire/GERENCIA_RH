@@ -10,9 +10,9 @@
     <div class="container">
 
       {% if colaborador.foto == "" or colaborador.foto == null %}
-        <img class="rounded float-right foto" src="{% static '/assets/img/not-found.jpg'%}" alt="foto">
+        <img class="rounded-circle float-end foto" src="{% static '/assets/img/not-found.jpg'%}" alt="foto">
       {% else %}
-        <img class="rounded float-right foto" src="{{ colaborador.foto.url }}" alt="foto do colaborador">
+        <img class="rounded-circle float-end foto" src="{{ colaborador.foto.url }}" alt="foto do colaborador">
       {% endif %}
 
         <table class="table table-striped">

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{%load static%}
+
+{% block title %}Detalhes do Contrato{% endblock  %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+<h3>Dados do Contrato</h3>
+    <div class="container">
+
+          <table class="table table-striped">
+            <tr>
+              <th>NOME:</th>
+              <td><a href="/contrato_view_for_name/{{colaborador.nome}}">{{ contrato.colaborador }}</td>
+            </tr>
+            <tr>
+              <th>N° Contrato:</th>
+              <td>{{ contrato.num_contrato }}</td>
+            </tr>
+            <tr>
+              <th>Periodo:</th>
+              <td>{{ contrato.periodo }}</td>
+            </tr>
+            <tr>
+              <th>Data Inicio</th>
+              <td>{{contrato.data_inicio}}</td>
+            </tr>
+            <tr>
+              <th>Data Termino:</th>
+              <td>{{contrato.data_termino}}</td>
+            </tr>
+            <tr>
+              <th>Contrato:</th>
+              <td>{{contrato.contrato}}</td>
+            </tr>
+          </table>
+
+            <div id="noprint" class="editPrint">
+              <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
+              <div><a href="/contrato/{{contrato.id}}/update/"><button class="btn btn-primary">Editar</button></div>                
+            </div>
+    </div>
+{% endblock  %}
+

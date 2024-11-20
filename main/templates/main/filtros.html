@@ -4,49 +4,51 @@
 {% include "partials/navbar.html" %}
 
 <div class="container">
-    <h1>COLABORADORES</h1>
+    <h3>FILTRO DE COLABORADORES</h3>
     <!-- filtros -->
-    <div class="form_filtro">
+    <div class="">
         <form method="POST" action="{% url 'filtros' %}">
             {% csrf_token %}
-            <div class="form_select" id="noprint">
-                <select name="departamento" id="departamento" class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg">
-                    <option value="">Selecione o Departamento.</option>
-                    <option value="FINACEIRO">FINACEIRO</option>
-                    <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
-                    <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
-                    <option value="COBRANCA">COBRANÇA</option>
-                    <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
-                    <option value="REAL_CREDIT">REAL CREDIT</option>
-                    <option value="RELACIONAMENTO">RELACIONAMENTO</option>
-                    <option value="COMERCIAL">COMERCIAL</option>
-                    <option value="RH">RH</option>
-                    <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
-                    <option value="JURIDICO">JURIDICO</option>
-                    <option value="CONTABIL">CONTÁBIL</option>
-                    <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
-                    <option value="SUPORTE_ADM">SUPORTE ADM</option>
-                    <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
-                    <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
-                    <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
-                    <option value="INFORMATICA">INFORMÁTICA</option>
-                </select>
-                <select name="classificacao" id="classificacao" class="form-select form-select-lg mb-3"
-                    aria-label=".form-select-lg">
-                    <option value="">Selecione a classificação.</option>
-                    <option value="FUNCIONARIO">FUNCIONÁRIO</option>
-                    <option value="ESTAGIARIO">ESTAGIÁRIO</option>
-                    <option value="MEI">MEI</option>
-                </select>
-                
-                <label >data inicio</label>    
-                <input type="date" name="data_inicial" id="data_inicial" class="form-control">
-                <label >data final</label>
-                <input type="date" name="data_final" id="data_final" class="form-control">
-                
-                <button class="btn btn-primary" type="submit">Filtrar</button>
-            </div>
+            <div class="filtroform ">
+                <div class="item1" id="noprint">
+                    <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
+                        <option value="">Selecione o Departamento.</option>
+                        <option value="FINACEIRO">FINACEIRO</option>
+                        <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
+                        <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
+                        <option value="COBRANCA">COBRANÇA</option>
+                        <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
+                        <option value="REAL_CREDIT">REAL CREDIT</option>
+                        <option value="RELACIONAMENTO">RELACIONAMENTO</option>
+                        <option value="COMERCIAL">COMERCIAL</option>
+                        <option value="RH">RH</option>
+                        <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
+                        <option value="JURIDICO">JURIDICO</option>
+                        <option value="CONTABIL">CONTÁBIL</option>
+                        <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
+                        <option value="SUPORTE_ADM">SUPORTE ADM</option>
+                        <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
+                        <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
+                        <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
+                        <option value="INFORMATICA">INFORMÁTICA</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
+                        <option value="">Selecione a classificação.</option>
+                        <option value="FUNCIONARIO">FUNCIONÁRIO</option>
+                        <option value="ESTAGIARIO">ESTAGIÁRIO</option>
+                        <option value="MEI">MEI</option>
+                    </select>
+                </div>
+
+                <div class="item2" id="noprint">    
+                    <label >Data inicial:</label>    
+                    <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+                    <label >Data final:</label>
+                    <input type="date" name="data_final" id="data_final" class="form-control">
+                    
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </div>
+            </div>    
         </form>
     </div>
     <h6>Total de Colaboradores: {{quantidade}}</h6>

@@ -3,18 +3,19 @@
 
 {% block 'body' %}
 {% include "partials/navbar.html" %}
+
 <div class="container">
     <h1>COLABORADORES DESLIGADOS</h1>
 
     <!-- filtro Busca por nome -->
     <form action="{% url 'buscar' %}">
-        <div class="form-group">
-            <div class="input-group">
+        <div class="filtroform form-group">
+            <div class="item1 input-group ">
                 <input class="form-control" name="buscar_desligados" type="text" placeholder="Digite o nome do colaborador..."
                 aria-label="Digite o nome" aria-describedby="basic-addon2">
                     <button class="btn btn-outline-secondary" type="submit">
                         Pesquisar
-                        <img class="busca__icone" src="{% static '/assets/icones/search.png' %}"
+                        <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
                         alt="ícone de search">
                     </button>
             </div>
@@ -22,10 +23,10 @@
     </form>
 
     <!-- filtros por data -->
-    <div class="form_filtro">
+    {% comment %} <div class="form_filtro">
         <form method="POST" action="{% url 'colaborador-desligado' %}">
             {% csrf_token %}
-            <div class="form_select" id="noprint">
+            <div class="item2" id="noprint">
                                
                 <label >data inicio</label>    
                 <input type="date" name="data_inicial" id="data_inicial" class="form-control">
@@ -34,6 +35,53 @@
                 
                 <button class="btn btn-primary" type="submit">exibir</button>
             </div>
+        </form>
+    </div> {% endcomment %}
+
+    <div class="">
+        <form method="POST" action="{% url 'colaborador-desligado' %}">
+            # TODO: editar filtros de colaborador desligado
+            {% csrf_token %}
+            <div class="filtroform ">
+                <div class="item1" id="noprint">
+                    <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
+                        <option value="">Selecione o Departamento.</option>
+                        <option value="FINACEIRO">FINACEIRO</option>
+                        <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
+                        <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
+                        <option value="COBRANCA">COBRANÇA</option>
+                        <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
+                        <option value="REAL_CREDIT">REAL CREDIT</option>
+                        <option value="RELACIONAMENTO">RELACIONAMENTO</option>
+                        <option value="COMERCIAL">COMERCIAL</option>
+                        <option value="RH">RH</option>
+                        <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
+                        <option value="JURIDICO">JURIDICO</option>
+                        <option value="CONTABIL">CONTÁBIL</option>
+                        <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
+                        <option value="SUPORTE_ADM">SUPORTE ADM</option>
+                        <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
+                        <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
+                        <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
+                        <option value="INFORMATICA">INFORMÁTICA</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
+                        <option value="">Selecione a classificação.</option>
+                        <option value="FUNCIONARIO">FUNCIONÁRIO</option>
+                        <option value="ESTAGIARIO">ESTAGIÁRIO</option>
+                        <option value="MEI">MEI</option>
+                    </select>
+                </div>
+
+                <div class="item2" id="noprint">    
+                    <label >Data inicial:</label>    
+                    <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+                    <label >Data final:</label>
+                    <input type="date" name="data_final" id="data_final" class="form-control">
+                    
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </div>
+            </div>    
         </form>
     </div>
 
