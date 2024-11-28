@@ -1,22 +1,21 @@
 /* Definição de cores */
 body {
-    background-color: #f5f5f5;
-    color: #333333;
+    color: #f4f0f0;
   }
   /* Definição de fontes */
-  h1, h2, h3 {
+  h1, h2, h3, h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 240px;
     font-weight: bold;
-  }
-  h3{
+    color: #f8f2f2;
     text-align: center;
   }
-  
+   
   li {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     padding: 10px;
-    color: #666;
+    color: #f8f2f2;
     line-height: 1.5;
   }
   p {
@@ -24,6 +23,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     text-align: center;
+    color: #f8f2f2;
   }
   /* Definição de espaçamento */
   .container {
@@ -41,13 +41,13 @@ body {
     text-align: center;
     text-decoration: none;
     color: #ffffff;
-    background-color: #007bff;
+    background-color: #f9fafb;
     border-radius: 4px;
     transition: background-color 0.3s ease-in-out;
   }
   .button:hover,
   .button:focus {
-    background-color: #0062cc;
+    background-color: #105094;
     outline: none;
   }
   /* Definição de formulários */
@@ -60,16 +60,32 @@ body {
     padding: 10px;
     font-size: 16px;
     line-height: 1.5;
-    color: #495057;
+    color: #f8f9f9;
     background-color: #ffffff;
     background-clip: padding-box;
-    border: 1px solid #ced4da;
+    border: 1px solid #eff1f3;
     border-radius: 4px;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   }
   .form-control:focus {
-    border-color: #007bff;
+    border-color: #fcfcfc;
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  .form-colaborador{
+    width: 100%;
+    display:inline-flex;
+    flex-direction: column;
+
+  }
+  .form-colaborador h1{
+    width: 100%;
+    text-align: center;
+  }
+  .form-colaborador p label{
+    width: 100%;
+    display:inline-flex;
+    flex-direction: column;
+    text-align: left;
   }
   .filtroform {
     display: flex;
@@ -114,13 +130,13 @@ body {
 }
   .documentos{
     background-color: #cfcfcf;
-    color: black;
+    color: rgb(252, 248, 248);
     padding: 20px;
     border-radius: 10px;
     font-size: 20px;
 }
   .fas.fa-edit{
-    color: #44556f;
+    color: #f7f8fb;
     cursor:pointer;
     margin: 5px;
     font-size: 20px;
@@ -139,9 +155,27 @@ body {
     gap: 10px;
     justify-content: center;
   }
-
+  table thead{
+    color: #FFF;  
+ }
+  table tbody{
+      color: #FFF;
+  }
+  table a{
+    color: #FFF;
+  }
 
   @media print { 
-    #noprint { display:none !important;} 
-    body { background: #fff;}
-    }
+    #noprint { display:none !important;
+      } 
+    
+      body {
+        background-color: white;
+        color: black;
+      }
+    
+      .highlight {
+        background-color: #e0e0e0; /* Um cinza claro para destacar o texto */
+        color: #333;
+      }
+  }

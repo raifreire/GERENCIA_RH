@@ -3,69 +3,104 @@
 
 {% block 'body' %}
 {% include "partials/navbar.html" %}
+
 <div class="container">
-    <h1>COLABORADORES</h1>
-    <p>Olá {{user}}!</p>
-
-        <form action="{% url 'buscar' %}">
+    <h3>COLABORADORES</h3>
+    <!-- filtros -->
+    <form action="{% url 'buscar' %}">
+        <div class="form-group" id="noprint">
             <div class="form-group">
-                <div class="form-group">
-                    <div class="input-group mb-3">
-                        <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
-                        aria-label="Digite o nome" aria-describedby="">
-                    
-                            <button class="btn btn-outline-secondary btn_search" type="submit">
-                                Pesquisar
-                                <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
-                                alt="ícone de search">
-                            </button>
-                    </div>
-                </div>               
+                <div class="input-group">
+                    <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
+                    aria-label="Digite o nome" aria-describedby="basic-addon2">
+                
+                        <button class="btn btn-outline-secondary" type="submit">
+                            Pesquisar
+                            <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
+                            alt="ícone de search">
+                        </button>
+                </div>
             </div>               
+        </div>               
 
-            </form>
+    </form>
+    <div class="">
+        <form method="POST" action="{% url 'colaborador-lista' %}">
+            {% csrf_token %}
+            <div class="filtroform ">
+                <div class="item1" id="noprint">
+                    <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
+                        <option value="">Selecione o Departamento.</option>
+                        <option value="FINACEIRO">FINACEIRO</option>
+                        <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
+                        <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
+                        <option value="COBRANCA">COBRANÇA</option>
+                        <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
+                        <option value="REAL_CREDIT">REAL CREDIT</option>
+                        <option value="RELACIONAMENTO">RELACIONAMENTO</option>
+                        <option value="COMERCIAL">COMERCIAL</option>
+                        <option value="RH">RH</option>
+                        <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
+                        <option value="JURIDICO">JURIDICO</option>
+                        <option value="CONTABIL">CONTÁBIL</option>
+                        <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
+                        <option value="SUPORTE_ADM">SUPORTE ADM</option>
+                        <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
+                        <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
+                        <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
+                        <option value="INFORMATICA">INFORMÁTICA</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
+                        <option value="">Selecione a classificação.</option>
+                        <option value="FUNCIONARIO">FUNCIONÁRIO</option>
+                        <option value="ESTAGIARIO">ESTAGIÁRIO</option>
+                        <option value="MEI">MEI</option>
+                    </select>
+                </div>
 
-    <!-- Botão para adicionar novo colaborador -->
-    {% comment %} <a href="{% url 'colaborador-create' %}" class="btn btn-primary mb-3">Adicionar colaborador</a> {% endcomment %}
-    {% comment %} <a href="{% url 'filtros' %}" class="btn btn-primary mb-3">Filtrar</a> {% endcomment %}
-    {% comment %} <a href="{% url 'contrato' %}" class="btn btn-primary mb-3">Contratos</a> {% endcomment %}
-    {% comment %} <a href="{% url 'colaborador-desligado' %}" class="btn btn-primary mb-3">Desligados</a> {% endcomment %}
+                <div class="item2" id="noprint">    
+                    <label >Data inicial:</label>    
+                    <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+                    <label >Data final:</label>
+                    <input type="date" name="data_final" id="data_final" class="form-control">
+                    
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </div>
+            </div>    
+        </form>
+    </div>
     <h6>Total de Colaboradores: {{quantidade}}</h6>
-            
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">COLABORADOR</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">DATA NASC.</th>
-                    <th scope="col">MATRÍCULA</th>
-                    <th scope="col">EDITAR</th>
-                </tr>
-            </thead>    
-            <tbody>
-                {% for colaborador in colaboradores_list %}
-                    <tr>
-                        <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
-                        <td>{{ colaborador.cpf }}</td>
-                        <td>{{ colaborador.data_nascimento }}</td>
-                        <td>{{ colaborador.matricula }}</td>
-                        <td><a href="/colaborador/{{colaborador.id}}/update/"><span><i class="fas fa-edit"></i></span></td>                
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="4">nenhum colaborador encontrado.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Colaborador</th>
+                <th scope="col">Cpf</th>
+                <th scope="col">Data Nasc.</th>
+                <th scope="col">Mátricula</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for colaborador in colaboradores_list %}
+            <tr>
+                <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
+                <td>{{ colaborador.cpf }}</td>
+                <td>{{ colaborador.data_nascimento }}</td>
+                <td>{{ colaborador.matricula }}</td>
+            </tr>
+
+            {% empty %}
+            <tr>
+                <td colspan="4">nenhum colaborador encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+
+    <div id="noprint" class="editPrint">
+        <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
+    </div>
+
 </div>
 
+
 {% endblock %}
-
-
-    <!-- Filtros por classificação -->
-    {% comment %} <a href="{% url 'filtro' 'FUNCIONARIO' %}" class="btn btn-primary mb-3">Funcionários</a> {% endcomment%}
-    {% comment %} <a href="{% url 'filtro' 'ESTAGIARIO' %}" class="btn btn-primary mb-3">Estagiários</a> {% endcomment%}
-    
-
-        

@@ -7,7 +7,6 @@ urlpatterns = [
     path('colaborador/create/', views.colaborador_create_view, name='colaborador-create'),
     path('colaborador/<int:pk>/update/', views.colaboradorUpdateView, name='colaborador-update'),
     path('delete/<int:id>', views.deleteColaborador, name="delete-colaborador"),
-    path('filtros/', views.filtrar_colaborador, name='filtros'),
     path('contrato/create/', views.contrato_create_view, name='contrato-create'),
     path('contrato/', views.contrato_view, name='contrato'),
     path('contratoID/<int:id>', views.contrato_id_view, name='contrato-detalhe'),

@@ -11,12 +11,48 @@ def colaboradorView(request):
     Função para listar os colaboradores
     '''
     if not request.user.is_authenticated:
-        return redirect('login')
+        return redirect('login')    
+    if request.method == 'GET':
+        colaboradores = Colaborador.objects.filter(ativo_inativo=True)
+        contador = colaboradores.count()
+        user = request.user.username
+        return render(request, 'main/colaborador.html', {'colaboradores_list': colaboradores, 'quantidade': contador, 'username': user})
+    if request.method == 'POST':
+        colaborador_list = Colaborador.objects.filter(ativo_inativo=True)
+        contador = colaborador_list.count()
 
-    colaborador_list = Colaborador.objects.all().filter(ativo_inativo=True)
-    contador = Colaborador.objects.filter(ativo_inativo=True).count()
-    user = request.user.username
-    return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list, 'quantidade': contador, 'username': user})
+        departamento_selecionado = request.POST.get('departamento')
+        classificacao_selecionada = request.POST.get('classificacao')  # funcionario/estagiario/mei
+        data_inicial = request.POST.get('data_inicial')
+        data_final = request.POST.get('data_final')
+
+        if data_inicial and data_final:
+            colaborador_list_for_data = colaborador_list.filter(
+                data_entrada__range=[data_inicial, data_final])
+            contador_for_data = colaborador_list_for_data.count()
+            return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list_for_data, 'quantidade': contador_for_data})
+
+        if departamento_selecionado == '' and classificacao_selecionada == '':
+            return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_list, 'quantidade': contador})
+        if departamento_selecionado != '':
+            colaborador_filtrado_departamento = colaborador_list.filter(
+                departamento=departamento_selecionado)
+            if classificacao_selecionada == '':
+                contador = len(colaborador_filtrado_departamento)
+                return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_filtrado_departamento, 'quantidade': contador})
+        if classificacao_selecionada != '':
+            if departamento_selecionado == '':
+                colaborador_filtrado_classificacao = colaborador_list.filter(
+                    classificacao=classificacao_selecionada)
+                contador = len(colaborador_filtrado_classificacao)
+                return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
+            else:
+                colaborador_filtrado_classificacao = colaborador_filtrado_departamento.filter(
+                    classificacao=classificacao_selecionada)
+                contador = len(colaborador_filtrado_classificacao)
+                return render(request, 'main/colaborador.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
+    else:
+        return render(request, 'main/colaborador.html')
 
 
 def colaboradorIDview(request, id):
@@ -107,47 +143,6 @@ def buscar(request):
         return render(request, 'main/contrato.html')
 
 
-def filtrar_colaborador(request):
-    if request.method == 'POST':
-        # colaborador_list = Colaborador.objects.all()
-        colaborador_list = Colaborador.objects.filter(ativo_inativo=True)
-        contador = colaborador_list.count()
-
-        departamento_selecionado = request.POST.get('departamento')
-        classificacao_selecionada = request.POST.get(
-            'classificacao')  # funcionario/estagiario/mei
-        data_inicial = request.POST.get('data_inicial')
-        data_final = request.POST.get('data_final')
-
-        if data_inicial and data_final:
-            colaborador_list_for_data = colaborador_list.filter(
-                data_entrada__range=[data_inicial, data_final])
-            contador_for_data = colaborador_list_for_data.count()
-            return render(request, 'main/filtros.html', {'colaboradores_list': colaborador_list_for_data, 'quantidade': contador_for_data})
-
-        if departamento_selecionado == '' and classificacao_selecionada == '':
-            return render(request, 'main/filtros.html', {'colaboradores_list': colaborador_list, 'quantidade': contador})
-        if departamento_selecionado != '':
-            colaborador_filtrado_departamento = colaborador_list.filter(
-                departamento=departamento_selecionado)
-            if classificacao_selecionada == '':
-                contador = len(colaborador_filtrado_departamento)
-                return render(request, 'main/filtros.html', {'colaboradores_list': colaborador_filtrado_departamento, 'quantidade': contador})
-        if classificacao_selecionada != '':
-            if departamento_selecionado == '':
-                colaborador_filtrado_classificacao = colaborador_list.filter(
-                    classificacao=classificacao_selecionada)
-                contador = len(colaborador_filtrado_classificacao)
-                return render(request, 'main/filtros.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
-            else:
-                colaborador_filtrado_classificacao = colaborador_filtrado_departamento.filter(
-                    classificacao=classificacao_selecionada)
-                contador = len(colaborador_filtrado_classificacao)
-                return render(request, 'main/filtros.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
-    else:
-        return render(request, 'main/filtros.html')
-
-
 @has_role_decorator('admin')
 def contrato_create_view(request):
     if request.method == 'POST':
@@ -185,8 +180,33 @@ def contrato_update_view(request, pk):
 
 def contrato_view(request):
     '''Função para listar os contratos'''
-    contratos = Contrato.objects.all()
-    return render(request, 'main/contrato.html', {'contratos': contratos})
+    if request.method=="GET":
+        contratos = Contrato.objects.all()
+        return render(request, 'main/contrato.html', {'contratos': contratos})
+
+    if request.method == 'POST':
+        contrato_list = Contrato.objects.all()
+        contador = contrato_list.count()
+
+        periodo_selecionado = request.POST.get('periodo')  # funcionario/estagiario/mei
+        data_inicial = request.POST.get('data_inicial')
+        data_final = request.POST.get('data_final')
+
+        if data_inicial and data_final:
+            contrato_list_for_data = contrato_list.filter(
+                data_inicio__range=[data_inicial, data_final])
+            contador_for_data = contrato_list_for_data.count()
+            return render(request, 'main/contrato.html', {'contratos': contrato_list_for_data, 'quantidade': contador_for_data})
+
+        if periodo_selecionado == '':
+            return render(request, 'main/contrato.html', {'contratos': contrato_list, 'quantidade': contador})
+        
+        if periodo_selecionado != '':
+            contrato_filtrado_periodo = contrato_list.filter(periodo=periodo_selecionado)
+            return render(request, 'main/contrato.html', {'contratos': contrato_filtrado_periodo, 'quantidade': contrato_filtrado_periodo.count()})
+        
+    else:
+        return render(request, 'main/contrato.html')
 
 
 def contrato_id_view(request, id):
@@ -210,19 +230,41 @@ def colaborador_desligado_view(request):
         contador = colaboradores.count()
         return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaboradores, 'quantidade': contador})
     if request.method == 'POST':
-        colaboradores = Colaborador.objects.filter(ativo_inativo=False)
+        colaborador_list = Colaborador.objects.filter(ativo_inativo=False)
+        contador = colaborador_list.count()
 
-        data_inicial = request.POST.get('data_inicial')
-        data_final = request.POST.get('data_final')
+        departamento_selecionado = request.POST.get('departamento_desligado')
+        classificacao_selecionada = request.POST.get('classificacao_desligado')  # funcionario/estagiario/mei
+        data_inicial = request.POST.get('data_inicial_desligado')
+        data_final = request.POST.get('data_final_desligado')
 
         if data_inicial and data_final:
-            colaborador_list = colaboradores.filter(
-                data_saida__range=[data_inicial, data_final])
-            contador = colaborador_list.count()
-            return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_list, 'quantidade': contador})
+            colaborador_list_for_data = colaborador_list.filter(
+                data_entrada__range=[data_inicial, data_final])
+            contador_for_data = colaborador_list_for_data.count()
+            return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_list_for_data, 'quantidade': contador_for_data})
 
-        contador = Colaborador.objects.filter(ativo_inativo=False).count()
-        return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaboradores, 'quantidade': contador})
+        if departamento_selecionado == '' and classificacao_selecionada == '':
+            return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_list, 'quantidade': contador})
+        if departamento_selecionado != '':
+            colaborador_filtrado_departamento = colaborador_list.filter(
+                departamento=departamento_selecionado)
+            if classificacao_selecionada == '':
+                contador = len(colaborador_filtrado_departamento)
+                return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_filtrado_departamento, 'quantidade': contador})
+        if classificacao_selecionada != '':
+            if departamento_selecionado == '':
+                colaborador_filtrado_classificacao = colaborador_list.filter(
+                    classificacao=classificacao_selecionada)
+                contador = len(colaborador_filtrado_classificacao)
+                return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
+            else:
+                colaborador_filtrado_classificacao = colaborador_filtrado_departamento.filter(
+                    classificacao=classificacao_selecionada)
+                contador = len(colaborador_filtrado_classificacao)
+                return render(request, 'main/colaborador_desligado.html', {'colaboradores_list': colaborador_filtrado_classificacao, 'quantidade': contador})
+    else:
+        return render(request, 'main/colaborador_desligado.html')
 
 
 ######################## TO DO ####################################################

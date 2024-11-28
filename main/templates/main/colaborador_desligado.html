@@ -9,42 +9,29 @@
 
     <!-- filtro Busca por nome -->
     <form action="{% url 'buscar' %}">
-        <div class="filtroform form-group">
-            <div class="item1 input-group ">
-                <input class="form-control" name="buscar_desligados" type="text" placeholder="Digite o nome do colaborador..."
-                aria-label="Digite o nome" aria-describedby="basic-addon2">
-                    <button class="btn btn-outline-secondary" type="submit">
-                        Pesquisar
-                        <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
-                        alt="ícone de search">
-                    </button>
-            </div>
-        </div>             
-    </form>
-
-    <!-- filtros por data -->
-    {% comment %} <div class="form_filtro">
-        <form method="POST" action="{% url 'colaborador-desligado' %}">
-            {% csrf_token %}
-            <div class="item2" id="noprint">
-                               
-                <label >data inicio</label>    
-                <input type="date" name="data_inicial" id="data_inicial" class="form-control">
-                <label >data final</label>
-                <input type="date" name="data_final" id="data_final" class="form-control">
+        <div class="form-group">
+            <div class="form-group">
+                <div class="input-group">
+                    <input class="form-control" name="buscar_desligados" type="text" placeholder="Digite o nome do colaborador..."
+                    aria-label="Digite o nome" aria-describedby="basic-addon2">
                 
-                <button class="btn btn-primary" type="submit">exibir</button>
-            </div>
-        </form>
-    </div> {% endcomment %}
+                        <button class="btn btn-outline-secondary" type="submit">
+                            Pesquisar
+                            <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
+                            alt="ícone de search">
+                        </button>
+                </div>
+            </div>               
+        </div>               
+
+    </form>
 
     <div class="">
         <form method="POST" action="{% url 'colaborador-desligado' %}">
-            # TODO: editar filtros de colaborador desligado
             {% csrf_token %}
             <div class="filtroform ">
                 <div class="item1" id="noprint">
-                    <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
+                    <select class="form-select" aria-label="Default select example" name="departamento_desligado" id="departamento_desligado">
                         <option value="">Selecione o Departamento.</option>
                         <option value="FINACEIRO">FINACEIRO</option>
                         <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
@@ -65,7 +52,7 @@
                         <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
                         <option value="INFORMATICA">INFORMÁTICA</option>
                     </select>
-                    <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
+                    <select class="form-select" aria-label="Default select example" name="classificacao_desligado" id="classificacao_desligado">
                         <option value="">Selecione a classificação.</option>
                         <option value="FUNCIONARIO">FUNCIONÁRIO</option>
                         <option value="ESTAGIARIO">ESTAGIÁRIO</option>
@@ -75,9 +62,9 @@
 
                 <div class="item2" id="noprint">    
                     <label >Data inicial:</label>    
-                    <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+                    <input type="date" name="data_inicial_desligado" id="data_inicial_desligado" class="form-control">
                     <label >Data final:</label>
-                    <input type="date" name="data_final" id="data_final" class="form-control">
+                    <input type="date" name="data_final_desligado" id="data_final_desligado" class="form-control">
                     
                     <button class="btn btn-primary" type="submit">Filtrar</button>
                 </div>
@@ -87,7 +74,7 @@
 
     <h6>Total de Colaboradores: {{quantidade}}</h6>
             
-        <table class="table table-striped">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">COLABORADOR</th>

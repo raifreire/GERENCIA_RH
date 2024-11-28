@@ -5,6 +5,8 @@
 {% block title %}Entrar{% endblock %}
 
 {% block 'body' %}
+<br>
+<br>
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <div class="card auth-card">
@@ -20,7 +22,9 @@
                 {{ form|crispy }}
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
+            <br>
             <a class="change-form-p" href="/accounts/register">Criar conta</a>
+            <br>
         </div>
     </div>
 </div>
