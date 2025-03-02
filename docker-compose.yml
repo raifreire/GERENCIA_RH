@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+       POSTGRES_DB: gerencia-rh-db
+       POSTGRES_USER: raifreire
+       POSTGRES_PASSWORD: kaka22raisinho
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  gerencia-rh-app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_NAME: gerencia-rh-db
+      DB_USER: raifreire
+      DB_PASSWORD: kaka22raisinho
+      DB_HOST: db
+      DB_PORT: 5432
+
+volumes:
+ - postgres_data:
