@@ -1,13 +1,10 @@
-/* Definição de cores */
-body {
-    color: #f4f0f0;
-  }
-  /* Definição de fontes */
+
+/* Definição de fontes */
   h1, h2, h3, h6 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 240px;
     font-weight: bold;
-    color: #f8f2f2;
+    color: #fffdfd;
     text-align: center;
   }
    
@@ -15,7 +12,7 @@ body {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     padding: 10px;
-    color: #f8f2f2;
+    color: #fffdfd;
     line-height: 1.5;
   }
   p {
@@ -23,7 +20,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     text-align: center;
-    color: #f8f2f2;
+    color: #fffdfd;
   }
   /* Definição de espaçamento */
   .container {
@@ -40,7 +37,7 @@ body {
     font-weight: bold;
     text-align: center;
     text-decoration: none;
-    color: #ffffff;
+    color: #fffdfd;
     background-color: #f9fafb;
     border-radius: 4px;
     transition: background-color 0.3s ease-in-out;
@@ -60,7 +57,7 @@ body {
     padding: 10px;
     font-size: 16px;
     line-height: 1.5;
-    color: #f8f9f9;
+    color: #fffdfd;
     background-color: #ffffff;
     background-clip: padding-box;
     border: 1px solid #eff1f3;
@@ -129,14 +126,14 @@ body {
     text-decoration: none;
 }
   .documentos{
-    background-color: #cfcfcf;
+    background-color: #e8e7e7;
     color: rgb(252, 248, 248);
     padding: 20px;
     border-radius: 10px;
     font-size: 20px;
-}
+  }
   .fas.fa-edit{
-    color: #f7f8fb;
+    color: #fffdfd;
     cursor:pointer;
     margin: 5px;
     font-size: 20px;
@@ -156,13 +153,27 @@ body {
     justify-content: center;
   }
   table thead{
-    color: #FFF;  
+    color: #fffdfd;  
  }
   table tbody{
-      color: #FFF;
+      color: #fffdfd;
   }
   table a{
-    color: #FFF;
+    color: #fffdfd;
+  }
+  .login-center{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .auth-card{
+    width: 100%;
+    padding: 30px;
+  }
+  .auth-card li{
+    color: black;
   }
 
   @media print { 
@@ -173,9 +184,23 @@ body {
         background-color: white;
         color: black;
       }
+      h1, h2, h3, h6{
+        color: #080808;
+      }
+      table thead{
+        color: #080808;  
+     }
+      table tbody{
+          color: #080808;
+      }
+      table a{
+        color: #101010;
+      }
     
       .highlight {
         background-color: #e0e0e0; /* Um cinza claro para destacar o texto */
         color: #333;
       }
   }
+
+  

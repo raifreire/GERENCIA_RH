@@ -240,4 +240,5 @@ class Canal_Divulgacao(models.Model):
     def __str__(self):
         return self.canal_divulgacao
 
+
 #TODO:verificar dados obrigatorios e depois terminar os formularios

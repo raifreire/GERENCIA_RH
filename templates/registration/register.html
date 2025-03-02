@@ -13,10 +13,13 @@
                 <input type="hidden" name="next" value="{{ next }}">
 
                 {{ form|crispy }}
-                <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                <div class="login-center">
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
+                    <br>
             </form>
-            <a class="change-form-p" href="/accounts/login">Login</a>
-
+                    <a class="change-form-p" href="/accounts/login">Login</a>
+                </div>
+            
         </div>
     </div>
 </div>

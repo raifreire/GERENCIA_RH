@@ -1,0 +1,63 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block 'body' %}
+{% include "partials/navbar.html" %}
+
+<div class="container">
+    <h2>COLABORADORES POR DEPARTAMENTO</h2>
+    <h6>Total de Colaboradores: {{total_colaboradores}}</h6>
+    
+    
+    <!--- teste -->
+    
+    {% for departamento in departamentos_data %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>{{ departamento.nome }}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2"><strong>Funcionários: {{departamento.quantidade_funcionarios}}</strong></td>
+                </tr>
+                {% for funcionario in departamento.funcionarios %}
+                <tr>
+                    <td>{{ funcionario.nome }}</td>
+                    <td>Funcionário</td>
+                </tr>
+                {% endfor %}
+                {% if not departamento.funcionarios %}
+                <tr>
+                
+                </tr>
+                {% endif %}
+                
+                <tr>
+                    <td colspan="2"><strong>Estagiários: {{departamento.quantidade_estagiarios}}</strong></td>
+                </tr>
+                {% for estagiario in departamento.estagiarios %}
+                <tr>
+                    <td>{{ estagiario.nome }}</td>
+                    <td>Estagiário</td>
+                </tr>
+                {% endfor %}
+                {% if not departamento.estagiarios %}
+                <tr>
+
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% endfor %}
+    
+  
+    <div id="noprint" class="editPrint">
+        <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
+    </div>
+
+</div>
+
+{% endblock %}

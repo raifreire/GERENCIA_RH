@@ -5,7 +5,7 @@
 {% include "partials/navbar.html" %}
 
 <div class="container">
-    <h3>COLABORADORES</h3>
+    <h2>COLABORADORES</h2>
     <!-- filtros -->
     <form action="{% url 'buscar' %}">
         <div class="form-group" id="noprint">
@@ -95,12 +95,16 @@
             {% endfor %}
         </tbody>
     </table>
-
+  
     <div id="noprint" class="editPrint">
         <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
     </div>
+<br>
+    <div id="noprint" class="editPrint">
+        <form action="{% url 'colaboradores_por_departamento' %}">        
+            <button type="submit" class="btn btn-primary">relatorio geral</button> 
+        </form>
+    </div>
 
 </div>
-
-
 {% endblock %}

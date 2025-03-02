@@ -15,8 +15,11 @@ def colaboradorView(request):
     if request.method == 'GET':
         colaboradores = Colaborador.objects.filter(ativo_inativo=True)
         contador = colaboradores.count()
-        user = request.user.username
-        return render(request, 'main/colaborador.html', {'colaboradores_list': colaboradores, 'quantidade': contador, 'username': user})
+        user = request.user.username        
+        return render(request, 'main/colaborador.html', {
+            'colaboradores_list': colaboradores, 'quantidade': contador, 'username': user
+            })
+    
     if request.method == 'POST':
         colaborador_list = Colaborador.objects.filter(ativo_inativo=True)
         contador = colaborador_list.count()
@@ -63,7 +66,7 @@ def colaboradorIDview(request, id):
 
 
 @has_role_decorator('admin')
-def colaborador_create_view(request):
+def adicionar_colaborador_view(request):
     '''
     Função para criar os colaboradores'''
     if request.method == 'POST':
@@ -80,7 +83,7 @@ def colaborador_create_view(request):
 
 
 @has_role_decorator('admin')
-def colaboradorUpdateView(request, pk):
+def atualizar_colaborador_view(request, pk):
     colaborador = get_object_or_404(Colaborador, pk=pk)
     if request.method == "POST":
         form = ColaboradorForm(request.POST, instance=colaborador)
@@ -97,12 +100,40 @@ def colaboradorUpdateView(request, pk):
 
 
 @has_role_decorator('admin')
-def deleteColaborador(request, id):
+def deletar_colaborador_view(request, id):
     '''
     Função para deletar os colaboradores'''
     colaborador = get_object_or_404(Colaborador, pk=id)
     colaborador.delete()
     return redirect('/')
+
+def colaboradores_por_departamento_view(request):
+
+    total_colaboradores = Colaborador.objects.filter(ativo_inativo=True).count()
+    # Obter todos os departamentos únicos
+    departamentos = Colaborador.objects.values_list('departamento', flat=True).distinct()
+    
+    # Agrupar colaboradores por departamento e tipo
+    departamentos_data = []
+    for departamento in departamentos:
+        colaboradores = Colaborador.objects.filter(departamento=departamento,ativo_inativo=True)
+        funcionarios = colaboradores.filter(classificacao='FUNCIONARIO')
+        estagiarios = colaboradores.filter(classificacao='ESTAGIARIO')
+        
+        
+        departamentos_data.append({
+            'nome': departamento,
+            'funcionarios': funcionarios,
+            'quantidade_funcionarios': funcionarios.count(),
+            'estagiarios': estagiarios,
+            'quantidade_estagiarios': estagiarios.count(),
+        })
+            
+    context = {
+        'departamentos_data': departamentos_data, 
+        'total_colaboradores': total_colaboradores
+    }
+    return render(request, 'main/colaboradores_por_departamento.html', context)
 
 
 def buscar(request):
@@ -125,7 +156,6 @@ def buscar(request):
                 ativo_inativo=False)
             colaboradores_desligados_list = colaboradores_desligados.filter(
                 nome__icontains=nome_a_buscar)
-            print(colaboradores_desligados)
             return render(request, "main/colaborador_desligado.html", {"colaboradores_list": colaboradores_desligados_list})
         else:
             return render(request, 'main/colaborador_desligado.html')
@@ -139,12 +169,14 @@ def buscar(request):
             contratos = Contrato.objects.filter(
                 colaborador__nome__icontains=nome_a_buscar)
             return render(request, 'main/contrato.html', {'contratos': contratos})
+        else:
+            return render(request, 'main/contrato.html')
     else:
         return render(request, 'main/contrato.html')
 
 
 @has_role_decorator('admin')
-def contrato_create_view(request):
+def adicionar_contrato_view(request):
     if request.method == 'POST':
         form = ContratoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -159,7 +191,7 @@ def contrato_create_view(request):
 
 
 @has_role_decorator('admin')
-def contrato_update_view(request, pk):
+def atualizar_contrato_view(request, pk):
     if request.method == 'GET':
         contrato = get_object_or_404(Contrato, pk=pk)
         form = ContratoForm(instance=contrato)
@@ -188,7 +220,8 @@ def contrato_view(request):
         contrato_list = Contrato.objects.all()
         contador = contrato_list.count()
 
-        periodo_selecionado = request.POST.get('periodo')  # funcionario/estagiario/mei
+        departamento_selecionado = request.POST.get('departamento')
+        periodo_selecionado = request.POST.get('periodo')  
         data_inicial = request.POST.get('data_inicial')
         data_final = request.POST.get('data_final')
 
@@ -198,13 +231,25 @@ def contrato_view(request):
             contador_for_data = contrato_list_for_data.count()
             return render(request, 'main/contrato.html', {'contratos': contrato_list_for_data, 'quantidade': contador_for_data})
 
-        if periodo_selecionado == '':
+        if departamento_selecionado == '' and periodo_selecionado == '':
             return render(request, 'main/contrato.html', {'contratos': contrato_list, 'quantidade': contador})
         
-        if periodo_selecionado != '':
-            contrato_filtrado_periodo = contrato_list.filter(periodo=periodo_selecionado)
-            return render(request, 'main/contrato.html', {'contratos': contrato_filtrado_periodo, 'quantidade': contrato_filtrado_periodo.count()})
+        if departamento_selecionado != '':
+            contrato_filtrado_departamento = contrato_list.filter(colaborador__departamento=departamento_selecionado)
+            if periodo_selecionado == '':
+                contador = len(contrato_filtrado_departamento)
+                return render(request, 'main/contrato.html', {'contratos': contrato_filtrado_departamento, 'quantidade': contador})
         
+        if periodo_selecionado != '':
+            if departamento_selecionado == '':
+                contrato_filtrado_periodo = contrato_list.filter(periodo=periodo_selecionado)
+                contador = len(contrato_filtrado_periodo)
+                return render(request, 'main/contrato.html', {'contratos': contrato_filtrado_periodo, 'quantidade': contador})
+            else:
+                contrato_filtrado_periodo = contrato_filtrado_departamento.filter(
+                    periodo=periodo_selecionado)
+                contador = len(contrato_filtrado_periodo)
+                return render(request, 'main/contrato.html', {'contratos': contrato_filtrado_periodo, 'quantidade': contador})
     else:
         return render(request, 'main/contrato.html')
 
@@ -216,7 +261,7 @@ def contrato_id_view(request, id):
     return render(request, 'main/contratoID.html', {'contrato': contrato})
 
 
-def contrato_view_for_name(request, name):
+def contrato_por_nome_view(request, name):
     '''
     Função para detalhar os contratos pelo nome do colaborador'''
     contratos = Contrato.objects.filter(colaborador__nome=name)
