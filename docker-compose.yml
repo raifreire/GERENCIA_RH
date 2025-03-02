@@ -6,7 +6,7 @@ services:
        POSTGRES_USER: raifreire
        POSTGRES_PASSWORD: kaka22raisinho
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - "/var/lib/postgresql/data"
   gerencia-rh-app:
     build: .
     volumes:
@@ -21,6 +21,3 @@ services:
       DB_PASSWORD: kaka22raisinho
       DB_HOST: db
       DB_PORT: 5432
-
-volumes:
- - postgres_data:
