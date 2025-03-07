@@ -4,7 +4,15 @@ from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
 from rolepermissions.decorators import has_role_decorator
+from django.contrib import messages
 
+MESSAGE_TAGS = {
+ messages.DEBUG: 'alert-primary',
+ messages.ERROR: 'alert-danger',
+ messages.SUCCESS: 'alert-success',
+ messages.INFO: 'alert-info',
+ messages.WARNING: 'alert-warning',
+}
 
 def colaboradorView(request):
     '''
@@ -65,10 +73,14 @@ def colaboradorIDview(request, id):
     return render(request, 'main/colaboradorID.html', {'colaborador': colaborador})
 
 
-@has_role_decorator('admin')
+#@has_role_decorator('admin')
 def adicionar_colaborador_view(request):
     '''
     Função para criar os colaboradores'''
+    
+    if not request.user.has_perm("admin"):
+        messages.add_message(request, messages.ERROR, 'Você não tem permissão para adicionar colaboradores.')
+        return redirect('colaborador-lista')
     if request.method == 'POST':
         form = ColaboradorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -82,8 +94,11 @@ def adicionar_colaborador_view(request):
     return render(request, 'main/form_colaborador.html', {'form': form})
 
 
-@has_role_decorator('admin')
+#@has_role_decorator('admin')
 def atualizar_colaborador_view(request, pk):
+    if not request.user.has_perm('admin'):
+        messages.add_message(request, messages.ERROR, 'Você não tem permissão para editar colaboradores.')
+        return redirect('colaborador-lista')
     colaborador = get_object_or_404(Colaborador, pk=pk)
     if request.method == "POST":
         form = ColaboradorForm(request.POST, instance=colaborador)
@@ -103,6 +118,10 @@ def atualizar_colaborador_view(request, pk):
 def deletar_colaborador_view(request, id):
     '''
     Função para deletar os colaboradores'''
+    if not request.user.has_role('admin'):
+        messages.add_message(request, messages.ERROR, 'Você não tem permissão para adicionar colaboradores.')
+        return redirect('colaborador-lista')
+
     colaborador = get_object_or_404(Colaborador, pk=id)
     colaborador.delete()
     return redirect('/')
@@ -316,3 +335,4 @@ def colaborador_desligado_view(request):
 # TODO: criar relatorios de ferias, renovacao.
 # usar timedelta para somatorio de datas?
 ######################## TO DO ####################################################
+#TODO: criar mensagens de alerta ao usuario.

@@ -6,6 +6,14 @@
 
 <div class="container">
     <h2>COLABORADORES</h2>
+    {% if messages %}
+            <br>
+            {% for message in messages %}
+            <section class="alert {{message.tags}}">
+                {{message}}
+            </section>
+            {% endfor %}
+    {% endif %}
     <!-- filtros -->
     <form action="{% url 'buscar' %}">
         <div class="form-group" id="noprint">
