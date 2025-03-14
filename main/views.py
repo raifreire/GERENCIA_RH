@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
 from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
+from braces.views import GroupRequiredMixin
 
 MESSAGE_TAGS = {
  messages.DEBUG: 'alert-primary',
@@ -77,7 +78,6 @@ def colaboradorIDview(request, id):
 def adicionar_colaborador_view(request):
     '''
     Função para criar os colaboradores'''
-    
     if not request.user.has_perm("admin"):
         messages.add_message(request, messages.ERROR, 'Você não tem permissão para adicionar colaboradores.')
         return redirect('colaborador-lista')
