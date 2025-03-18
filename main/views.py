@@ -3,17 +3,24 @@ from .forms import ColaboradorForm, ContratoForm
 from django.views.generic.edit import UpdateView
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.urls import reverse, reverse_lazy
-from rolepermissions.decorators import has_role_decorator
 from django.contrib import messages
-from braces.views import GroupRequiredMixin
+from django.contrib.auth.decorators import login_required
+from functools import wraps
 
-MESSAGE_TAGS = {
- messages.DEBUG: 'alert-primary',
- messages.ERROR: 'alert-danger',
- messages.SUCCESS: 'alert-success',
- messages.INFO: 'alert-info',
- messages.WARNING: 'alert-warning',
-}
+
+def group_required(group_name, redirect_url=''):
+    '''Função para verificar se o usuário pertence a um grupo específico, caso contrário, redireciona para a página de login.'''
+    def decorator(view_func):
+        @wraps(view_func)
+        def _wrapped_view(request, *args, **kwargs):
+            if request.user.is_authenticated and request.user.groups.filter(name=group_name).exists():
+                return view_func(request, *args, **kwargs)
+            else:
+                messages.error(request, 'Permissão negada para esta página.')
+                return redirect(redirect_url)
+        return _wrapped_view
+    return decorator
+
 
 def colaboradorView(request):
     '''
@@ -74,13 +81,11 @@ def colaboradorIDview(request, id):
     return render(request, 'main/colaboradorID.html', {'colaborador': colaborador})
 
 
-#@has_role_decorator('admin')
+@group_required('Admin', redirect_url='colaborador-lista')
 def adicionar_colaborador_view(request):
     '''
     Função para criar os colaboradores'''
-    if not request.user.has_perm("admin"):
-        messages.add_message(request, messages.ERROR, 'Você não tem permissão para adicionar colaboradores.')
-        return redirect('colaborador-lista')
+    
     if request.method == 'POST':
         form = ColaboradorForm(request.POST, request.FILES)
         if form.is_valid():
@@ -94,11 +99,11 @@ def adicionar_colaborador_view(request):
     return render(request, 'main/form_colaborador.html', {'form': form})
 
 
-#@has_role_decorator('admin')
+@group_required('Admin', redirect_url='colaborador-lista')
 def atualizar_colaborador_view(request, pk):
-    if not request.user.has_perm('admin'):
+    """ if not request.user.has_perm('admin'):
         messages.add_message(request, messages.ERROR, 'Você não tem permissão para editar colaboradores.')
-        return redirect('colaborador-lista')
+        return redirect('colaborador-lista') """
     colaborador = get_object_or_404(Colaborador, pk=pk)
     if request.method == "POST":
         form = ColaboradorForm(request.POST, instance=colaborador)
@@ -114,7 +119,7 @@ def atualizar_colaborador_view(request, pk):
     return render(request, 'main/form_colaborador.html', {'form': form})
 
 
-@has_role_decorator('admin')
+@group_required('Admin', redirect_url='colaborador-lista')
 def deletar_colaborador_view(request, id):
     '''
     Função para deletar os colaboradores'''
@@ -125,6 +130,7 @@ def deletar_colaborador_view(request, id):
     colaborador = get_object_or_404(Colaborador, pk=id)
     colaborador.delete()
     return redirect('/')
+
 
 def colaboradores_por_departamento_view(request):
 
@@ -194,7 +200,7 @@ def buscar(request):
         return render(request, 'main/contrato.html')
 
 
-@has_role_decorator('admin')
+@group_required('Admin', redirect_url='colaborador-lista')
 def adicionar_contrato_view(request):
     if request.method == 'POST':
         form = ContratoForm(request.POST, request.FILES)
@@ -209,7 +215,7 @@ def adicionar_contrato_view(request):
     return render(request, 'main/form_contrato.html', {'form': form})
 
 
-@has_role_decorator('admin')
+@group_required('Admin', redirect_url='colaborador-lista')
 def atualizar_contrato_view(request, pk):
     if request.method == 'GET':
         contrato = get_object_or_404(Contrato, pk=pk)
@@ -287,6 +293,7 @@ def contrato_por_nome_view(request, name):
     return render(request, 'main/contrato.html', {'contratos': contratos})
 
 
+@group_required('Admin', redirect_url='colaborador-lista')
 def colaborador_desligado_view(request):
     '''Função para listar os colaboradores desligados'''
     if request.method == 'GET':

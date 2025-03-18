@@ -6,15 +6,28 @@
 
 <div class="container">
     <h2>COLABORADORES</h2>
+ 
+    <!-- mensagens de erro -->
     {% if messages %}
-            <br>
-            {% for message in messages %}
-            <section class="alert {{message.tags}}">
-                {{message}}
-            </section>
-            {% endfor %}
+        <div class="fixed top-5 right-5 space-y-4 z-50"> 
+        {% for message in messages %}
+            <div class="flex items-center justifiy-between px-4 py-3 rounded-lg shadow-lg
+            text-red-700"
+            {% if message.tags == 'error'%} bg-red-500
+            {% elif message.tags == 'success'%} bg-green-500
+            {% elif message.tags == 'info'%} bg-blue-500
+            {% elif message.tags == 'warning'%} bg-yellow-500
+            {% else %} bg-gray-500 {% endif %}>
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()" class="ml-4 text-red hover:text-gray-200 focus:outline-none">
+                X
+            </button>
+            </div>    
+        {% endfor %}
+        </div>
     {% endif %}
-    <!-- filtros -->
+    
+   <!-- filtros -->
     <form action="{% url 'buscar' %}">
         <div class="form-group" id="noprint">
             <div class="form-group">
