@@ -10,7 +10,7 @@ class ColaboradorForm(forms.ModelForm):
     
     class Meta:
         model = Colaborador
-        fields = ['nome','cpf','data_nascimento','matricula',
+        fields = ['nome','cpf','sexo','data_nascimento','matricula',
                   'departamento','classificacao','data_entrada','data_saida',
                   'telefone','tel_auxiliar','email','foto',
                   'observacao'
@@ -20,6 +20,7 @@ class ColaboradorForm(forms.ModelForm):
         super().__init__(*args,**kwargs)
         self.fields['nome'].widget.attrs.update({'class':'form-control'})
         self.fields['cpf'].widget.attrs.update({'class':'form-control'})
+        self.fields['sexo'].widget.attrs.update({'class':'form-control'})
         self.fields['data_nascimento'].widget.attrs.update({'class':'form-control'})
         self.fields['matricula'].widget.attrs.update({'class':'form-control'})
         self.fields['departamento'].widget.attrs.update({'class':'form-control'})

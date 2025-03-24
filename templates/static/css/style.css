@@ -102,6 +102,9 @@
  .item2 input{
   max-width: 200px;
  }
+ .item2 label{
+  color: #fffdfd;
+ }
  .item2 button{
   margin-left: 10px;
  }
