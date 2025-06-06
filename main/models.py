@@ -4,12 +4,13 @@ from datetime import datetime
 
 class Colaborador(models.Model):
     OPCOES_DEPARTAMENTOS = [
-        ("FINACEIRO","FINACEIRO"),
+        ("FINANCEIRO","FINANCEIRO"),
         ("CENTRAL_ATENDIMENTO","CENTRAL DE ATENDIMENTO"),
         ("CENTRAL_INADIMPLENCIA","CENTRAL DE INADIMPLENCIA"),
         ("COBRANCA","COBRANÇA"),
         ("CONTROLE_QUALIDADE","CONTROLE DE QUALIDADE"),
         ("REAL_CREDIT","REAL CREDIT"),
+        ("ADMINISTRATIVO","ADMINISTRATIVO"),
         ("RELACIONAMENTO","RELACIONAMENTO"),
         ("COMERCIAL","COMERCIAL"),
         ("RH","RH"),
@@ -22,6 +23,8 @@ class Colaborador(models.Model):
         ("GERENCIA_CORPORATIVA","GERENCIA CORPORATIVA"),
         ("DIRETORIA_EXECUTIVA","DIRETORIA EXECUTIVA"),
         ("INFORMATICA","INFORMÁTICA"),
+        ("MARKETING","MARKETING"),
+        ("CERTIFICADO_DIGITAL","CERTIFICADO DIGITAL")
     ]
 
     OPCOES_CLASSIFICACAO = [
@@ -44,25 +47,25 @@ class Colaborador(models.Model):
     )
     matricula = models.IntegerField()
     nome = models.CharField(max_length=254, blank=False)
-    nome_mae = models.CharField(max_length=254, blank=False)
-    nome_pai = models.CharField(max_length=254, blank=False)
-    nome_conjuge = models.CharField(max_length=254, blank=False)
+    nome_mae = models.CharField(max_length=254, blank=True)
+    nome_pai = models.CharField(max_length=254, blank=True)
+    nome_conjuge = models.CharField(max_length=254, blank=True)
     cpf = models.CharField(max_length=14, blank=False)
-    cpf_mae = models.CharField(max_length=14, blank=False)
-    cpf_pai = models.CharField(max_length=14, blank=False)
+    cpf_mae = models.CharField(max_length=14, blank=True)
+    cpf_pai = models.CharField(max_length=14, blank=True)
     data_nascimento = models.DateField(blank=False)
     estado_civil = models.CharField(max_length=20,choices=OPCOES_ESTADO_CIVIL,default='')
-    naturalidade = models.CharField(max_length=50)
-    estado_naturalidade = models.CharField(max_length=50)
+    naturalidade = models.CharField(max_length=50,blank=True)
+    estado_naturalidade = models.CharField(max_length=50,blank=True)
     sexo = models.CharField(max_length=20,choices=OPCOES_SEXO,default='')
     email = models.EmailField()
     foto = models.ImageField(upload_to="fotos/%Y/%m/%d/", blank=True)
     telefone = models.CharField(blank=True,max_length=15)
     tel_auxiliar = models.CharField(blank=True,max_length=15)
-    profissao = models.CharField(max_length=100)
-    profissao_pai = models.CharField(max_length=100)
-    profissao_mae = models.CharField(max_length=100)
-    profissao_conjuge = models.CharField(max_length=100)
+    profissao = models.CharField(max_length=100,blank=True)
+    profissao_pai = models.CharField(max_length=100,blank=True)
+    profissao_mae = models.CharField(max_length=100,blank=True)
+    profissao_conjuge = models.CharField(max_length=100,blank=True)
     departamento = models.TextField(max_length=150, choices=OPCOES_DEPARTAMENTOS, default='')
     classificacao = models.TextField(max_length=150, choices=OPCOES_CLASSIFICACAO, default='')
     data_entrada = models.DateField(default=datetime.now,blank=False)

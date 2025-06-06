@@ -1,10 +1,9 @@
 from .models import Colaborador, Contrato
 from .forms import ColaboradorForm, ContratoForm
 from django.views.generic.edit import UpdateView
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
-#from django.contrib.auth.decorators import login_required
 from functools import wraps
 
 
@@ -29,7 +28,7 @@ def colaboradorView(request):
     if not request.user.is_authenticated:
         return redirect('login')    
     if request.method == 'GET':
-        colaboradores = Colaborador.objects.filter(ativo_inativo=True)
+        colaboradores = Colaborador.objects.filter(ativo_inativo=True).order_by('nome')
         contador = colaboradores.count()
         user = request.user.username        
         return render(request, 'main/colaborador.html', {
@@ -106,7 +105,7 @@ def atualizar_colaborador_view(request, pk):
         return redirect('colaborador-lista') """
     colaborador = get_object_or_404(Colaborador, pk=pk)
     if request.method == "POST":
-        form = ColaboradorForm(request.POST, instance=colaborador)
+        form = ColaboradorForm(request.POST,request.FILES,instance=colaborador)
         if form.is_valid():
             colaborador = form.save(commit=False)
             if colaborador.data_saida:
@@ -116,7 +115,7 @@ def atualizar_colaborador_view(request, pk):
     else:
         form = ColaboradorForm(instance=colaborador)
 
-    return render(request, 'main/form_colaborador.html', {'form': form})
+    return render(request, 'main/form_colaborador.html', {'form': form}) 
 
 
 @group_required('Admin', redirect_url='colaborador-lista')
@@ -341,5 +340,5 @@ def colaborador_desligado_view(request):
 ######################## TO DO ####################################################
 # TODO: criar relatorios de ferias, renovacao.
 # usar timedelta para somatorio de datas?
-######################## TO DO ####################################################
+######################## DONE ####################################################
 #TODO: criar mensagens de alerta ao usuario.

@@ -5,7 +5,7 @@
 {% include "partials/navbar.html" %}
 
 <div class="container">
-    <h2>COLABORADORES</h2>
+    <strong> <h2>COLABORADORES</h2> </strong>
  
     <!-- mensagens de erro -->
     {% if messages %}
@@ -52,12 +52,12 @@
                 <div class="item1" id="noprint">
                     <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
                         <option value="">Selecione o Departamento.</option>
-                        <option value="FINACEIRO">FINACEIRO</option>
+                        <option value="FINACEIRO">FINANCEIRO</option>
                         <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
                         <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
                         <option value="COBRANCA">COBRANÇA</option>
                         <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
-                        <option value="REAL_CREDIT">REAL CREDIT</option>
+                        <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
                         <option value="RELACIONAMENTO">RELACIONAMENTO</option>
                         <option value="COMERCIAL">COMERCIAL</option>
                         <option value="RH">RH</option>
@@ -70,6 +70,8 @@
                         <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
                         <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
                         <option value="INFORMATICA">INFORMÁTICA</option>
+                        <option value="MARKETING">MARKETING</option>
+                        <option value="CERTIFICADO_DIGITAL">CERTIFICADO DIGITAL</option>
                     </select>
                     <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
                         <option value="">Selecione a classificação.</option>
@@ -105,7 +107,7 @@
             <tr>
                 <td><a href="/colaboradorID/{{colaborador.id}}">{{ colaborador.nome }}</td>
                 <td>{{ colaborador.cpf }}</td>
-                <td>{{ colaborador.data_nascimento }}</td>
+                <td>{{ colaborador.data_nascimento|date:"d/m/Y" }}</td>
                 <td>{{ colaborador.matricula }}</td>
             </tr>
 

@@ -2,10 +2,25 @@ from django import forms
 from .models import Colaborador, Contrato
 
 class ColaboradorForm(forms.ModelForm):
-    telefone = forms.CharField(widget=forms.TextInput(attrs={'minlength':'15', 'maxlength':'15','onkeyup':'handlePhone(event)'}))
-    tel_auxiliar = forms.CharField(widget=forms.TextInput(attrs={'minlength':'15', 'maxlength':'15','onkeyup':'handlePhone(event)'}))
+    
+    telefone = forms.CharField(widget=forms.TextInput(attrs={
+        'minlength':'15', 'maxlength':'15','onkeyup':'handlePhone(event)'
+        }))
+    
+    tel_auxiliar = forms.CharField(widget=forms.TextInput(attrs={
+        'minlength':'15', 'maxlength':'15','onkeyup':'handlePhone(event)'
+        }))
+    
+    cpf = forms.CharField(min_length=14, max_length=14, widget=forms.TextInput(attrs={
+        'placeholder': '000.000.000-00',
+        'onkeyup': 'handleCPF(event)',
+        'maxlength': '14',
+        'minlength': '14',
+        }))
+
     
     data_nascimento = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
+    data_entrada = forms.DateField(widget=forms.TextInput(attrs={'type':'date'}))
     foto = forms.FileInput()
     
     class Meta:
