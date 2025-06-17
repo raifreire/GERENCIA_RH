@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from functools import wraps
+from django.core.paginator import Paginator
 
 
 def group_required(group_name, redirect_url=''):
@@ -29,10 +30,15 @@ def colaboradorView(request):
         return redirect('login')    
     if request.method == 'GET':
         colaboradores = Colaborador.objects.filter(ativo_inativo=True).order_by('nome')
+        
+        paginador = Paginator(colaboradores,10)
+        numero_pagina = request.GET.get("page", 1)
+        colaboradores_por_pagina = paginador.get_page(numero_pagina)
+
         contador = colaboradores.count()
         user = request.user.username        
         return render(request, 'main/colaborador.html', {
-            'colaboradores_list': colaboradores, 'quantidade': contador, 'username': user
+            'colaboradores_list': colaboradores_por_pagina, 'quantidade': contador, 'username': user
             })
     
     if request.method == 'POST':
@@ -340,5 +346,7 @@ def colaborador_desligado_view(request):
 ######################## TO DO ####################################################
 # TODO: criar relatorios de ferias, renovacao.
 # usar timedelta para somatorio de datas?
+# TODO: adicionar manutençao nas opces de departmento
+# TODO: criar paginação
 ######################## DONE ####################################################
-#TODO: criar mensagens de alerta ao usuario.
+# criar mensagens de alerta ao usuario.

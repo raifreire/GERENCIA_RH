@@ -160,9 +160,15 @@
  }
   table tbody{
       color: #fffdfd;
+      text-align: left;
   }
   table a{
     color: #fffdfd;
+  }
+  .align-i{
+    width:50%;
+    display: flex;
+    justify-content: center;
   }
   .login-center{
     width: 100%;
@@ -178,7 +184,9 @@
   .auth-card li{
     color: black;
   }
-
+  .pagination{
+    
+  }
   @media print { 
     #noprint { display:none !important;
       } 

@@ -26,7 +26,7 @@ class ColaboradorForm(forms.ModelForm):
     class Meta:
         model = Colaborador
         fields = ['nome','cpf','sexo','data_nascimento','matricula',
-                  'departamento','classificacao','data_entrada','data_saida',
+                  'departamento','funcao','classificacao','data_entrada','data_saida',
                   'telefone','tel_auxiliar','email','foto',
                   'observacao'
                   ]
@@ -39,6 +39,7 @@ class ColaboradorForm(forms.ModelForm):
         self.fields['data_nascimento'].widget.attrs.update({'class':'form-control'})
         self.fields['matricula'].widget.attrs.update({'class':'form-control'})
         self.fields['departamento'].widget.attrs.update({'class':'form-control'})
+        self.fields['funcao'].widget.attrs.update({'class':'form-control'})
         self.fields['classificacao'].widget.attrs.update({'class':'form-control'})
         self.fields['data_entrada'].widget.attrs.update({'class':'form-control'})
         self.fields['data_saida'].widget.attrs.update({'class':'form-control'})

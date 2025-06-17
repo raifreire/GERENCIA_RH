@@ -91,15 +91,24 @@
                 </div>
             </div>    
         </form>
+        
+        <div class="filtroform">
+            <form action="{% url 'colaboradores_por_departamento' %}">        
+                <button type="submit" class="btn btn-primary">relatorio geral</button> 
+            </form>
+        </div>
+
     </div>
+   
     <h6>Total de Colaboradores: {{quantidade}}</h6>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Colaborador</th>
-                <th scope="col">Cpf</th>
-                <th scope="col">Data Nasc.</th>
-                <th scope="col">Mátricula</th>
+                <th scope="col">COLABORADOR</th>
+                <th scope="col">CPF</th>
+                <th scope="col">DATA NASC.</th>
+                <th scope="col">MATRÍCULA</th>
+                <th scope="col">EDITAR</th>
             </tr>
         </thead>
         <tbody>
@@ -109,6 +118,7 @@
                 <td>{{ colaborador.cpf }}</td>
                 <td>{{ colaborador.data_nascimento|date:"d/m/Y" }}</td>
                 <td>{{ colaborador.matricula }}</td>
+                <td> <div class="align-i"><a href="/colaborador/{{colaborador.id}}/update/"><span> <i class="fas fa-edit"></i></span></div></td>
             </tr>
 
             {% empty %}
@@ -124,10 +134,28 @@
     </div>
 <br>
     <div id="noprint" class="editPrint">
-        <form action="{% url 'colaboradores_por_departamento' %}">        
-            <button type="submit" class="btn btn-primary">relatorio geral</button> 
-        </form>
+        
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if colaboradores_list.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">Anterior</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ colaboradores_list.previous_page_number }}">Próxima</a></li>
+                {% endif %}
+                
+                <li class="page-item"> <a class="page-link">
+                    {{ colaboradores_list.number }} 
+                </a>
+            </li>
+            
+            {% if colaboradores_list.has_next %}
+            <a class="page-link" href="?page={{ colaboradores_list.next_page_number }}">Próxima</a>
+            <a class="page-link" href="?page={{ colaboradores_list.paginator.num_pages }}">Última</a>
+            {% endif %}
+        </ul>
+    </nav>
     </div>
+
+    
 
 </div>
 {% endblock %}

@@ -24,7 +24,9 @@ class Colaborador(models.Model):
         ("DIRETORIA_EXECUTIVA","DIRETORIA EXECUTIVA"),
         ("INFORMATICA","INFORMÁTICA"),
         ("MARKETING","MARKETING"),
-        ("CERTIFICADO_DIGITAL","CERTIFICADO DIGITAL")
+        ("CERTIFICADO_DIGITAL","CERTIFICADO DIGITAL"),
+        ("MANUTENCAO","MANUTENÇÃO"),
+        ("PORTARIA","PORTARIA"),
     ]
 
     OPCOES_CLASSIFICACAO = [
@@ -66,6 +68,7 @@ class Colaborador(models.Model):
     profissao_pai = models.CharField(max_length=100,blank=True)
     profissao_mae = models.CharField(max_length=100,blank=True)
     profissao_conjuge = models.CharField(max_length=100,blank=True)
+    funcao = models.CharField(max_length=50,blank=True)
     departamento = models.TextField(max_length=150, choices=OPCOES_DEPARTAMENTOS, default='')
     classificacao = models.TextField(max_length=150, choices=OPCOES_CLASSIFICACAO, default='')
     data_entrada = models.DateField(default=datetime.now,blank=False)
