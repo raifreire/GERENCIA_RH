@@ -30,11 +30,12 @@ def colaboradorView(request):
         return redirect('login')    
     if request.method == 'GET':
         colaboradores = Colaborador.objects.filter(ativo_inativo=True).order_by('nome')
-        
-        paginador = Paginator(colaboradores,10)
-        numero_pagina = request.GET.get("page", 1)
-        colaboradores_por_pagina = paginador.get_page(numero_pagina)
 
+        paginator = Paginator(colaboradores, 10)  # Show 10 contacts per page.
+
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        
         contador = colaboradores.count()
         user = request.user.username 
 
@@ -42,7 +43,7 @@ def colaboradorView(request):
         opcoes_classificacao = Colaborador.OPCOES_CLASSIFICACAO
 
         return render(request, 'main/colaborador.html', {
-            'colaboradores_list': colaboradores_por_pagina, 
+            'colaboradores_list': page_obj, 
             'quantidade': contador, 
             'username': user, 
             'opcoes_departamentos':opcoes_departamentos,

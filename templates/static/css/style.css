@@ -100,9 +100,10 @@
     gap: 10px;
     margin-bottom: 20px;
  }
- .filtroform label{
-  color: #fffdfd;
- }  
+  .filtroform label{
+    color: #fffdfd;
+  }
+  /*Ajustes de Imagens */
   .foto{
     max-width:100px;
     max-height:140px;
@@ -125,6 +126,7 @@
     border-radius: 10px;
     font-size: 20px;
   }
+  /*Ajustes de Icones na Tabela*/
   .fas.fa-edit{
     color: #fffdfd;
     cursor:pointer;
@@ -137,20 +139,14 @@
     cursor:pointer;
     font-size: 20px;
     float: right;
-  }
-  .editPrint{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-  }
+  } 
+  /*  Ajustes de Tabela   */ 
   table thead{
     color: #fffdfd;  
- }
+  }
   table tbody{
-      color: #fffdfd;
-      text-align: left;
+    color: #fffdfd;
+    text-align: left;
   }
   table a{
     color: #fffdfd;
@@ -174,7 +170,59 @@
   .auth-card li{
     color: black;
   }
- 
+  /*  Ajustes de Paginação   */
+  .pagination {
+    text-align: center;
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    }
+  .step-links {
+    display: inline-block;
+    padding: 10px;  
+    border-radius: 5x;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  .step-links a {
+    margin: 0 8px;
+    padding: 6px 12px;
+    text-decoration: none;
+    color: #fffdfd;
+    border: 1px solid rgb(201, 210, 223);
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  .step-links a:hover {
+    border-color:rgba(232, 235, 239, 0.87);
+    box-shadow: 0 0 5px rgba(247, 247, 253, 0.74);
+    color:rgba(13, 13, 50, 0.89);
+    background-color:rgba(255, 253, 253, 0.87);
+  }
+  .step-links .current {
+    margin: 0 5px;
+    font-weight: bold;
+    color: rgb(228, 232, 237);
+  }
+  .step-links .disabled {
+    margin: 0 8px;
+    padding: 6px 12px;
+    color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-decoration: none;
+    background-color: transparent;
+  }
+  /*  FOOTER   */
+  footer{
+    width: 100%;
+    padding-bottom: 15px;
+  }
+  .editPrint{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  } 
   @media print { 
     #noprint { display:none !important;
       } 

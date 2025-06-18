@@ -112,27 +112,23 @@
         </tbody>
     </table>
     <br>
-    <div id="noprint" class="editPrint">
-        
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
+
+        <!-- Paginação -->
+        <div class="pagination" id="noprint">
+            <span class="step-links">
                 {% if colaboradores_list.has_previous %}
-                <li class="page-item"><a class="page-link" href="?page=1">Anterior</a></li>
-                <li class="page-item"><a class="page-link" href="?page={{ colaboradores_list.previous_page_number }}">Próxima</a></li>
+                    <a href="?page={{ colaboradores_list.previous_page_number }}">Anterior</a>
+                {% else %}
+                    <span class="disabled">Anterior</span>
                 {% endif %}
-                
-                <li class="page-item"> <a class="page-link">
-                    {{ colaboradores_list.number }} 
-                </a>
-            </li>
-            
-            {% if colaboradores_list.has_next %}
-            <a class="page-link" href="?page={{ colaboradores_list.next_page_number }}">Próxima</a>
-            <a class="page-link" href="?page={{ colaboradores_list.paginator.num_pages }}">Última</a>
-            {% endif %}
-        </ul>
-    </nav>
-    </div>
+
+                {% if colaboradores_list.has_next %}
+                    <a href="?page={{ colaboradores_list.next_page_number }}">Próxima</a>
+                {% else %}
+                    <span class="disabled">Próxima</span>
+                {% endif %}
+            </span>
+        </div>
 
 </div>
 {% endblock %}
