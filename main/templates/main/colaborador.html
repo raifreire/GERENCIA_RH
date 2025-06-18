@@ -28,79 +28,62 @@
     {% endif %}
     
    <!-- filtros -->
-    <form action="{% url 'buscar' %}">
-        <div class="form-group" id="noprint">
+    <div class="filtroform-busca"  id="noprint">
+        <form action="{% url 'buscar' %}" id="principal-item-filtroform-busca">
             <div class="form-group">
-                <div class="input-group">
-                    <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
-                    aria-label="Digite o nome" aria-describedby="basic-addon2">
-                
-                        <button class="btn btn-outline-secondary" type="submit">
-                            Pesquisar
-                            <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
-                            alt="ícone de search">
-                        </button>
-                </div>
-            </div>               
-        </div>               
-
-    </form>
-    <div class="">
-        <form method="POST" action="{% url 'colaborador-lista' %}">
-            {% csrf_token %}
-            <div class="filtroform ">
-                <div class="item1" id="noprint">
-                    <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
-                        <option value="">Selecione o Departamento.</option>
-                        <option value="FINACEIRO">FINANCEIRO</option>
-                        <option value="CENTRAL_ATENDIMENTO">CENTRAL DE ATENDIMENTO</option>
-                        <option value="CENTRAL_INADIMPLENCIA">CENTRAL DE INADIMPLÊNCIA</option>
-                        <option value="COBRANCA">COBRANÇA</option>
-                        <option value="CONTROLE_QUALIDADE">CONTROLE DE QUALIDADE</option>
-                        <option value="ADMINISTRATIVO">ADMINISTRATIVO</option>
-                        <option value="RELACIONAMENTO">RELACIONAMENTO</option>
-                        <option value="COMERCIAL">COMERCIAL</option>
-                        <option value="RH">RH</option>
-                        <option value="DEP_PESSOAL">DEPARTAMENTO PESSOAL</option>
-                        <option value="JURIDICO">JURIDICO</option>
-                        <option value="CONTABIL">CONTÁBIL</option>
-                        <option value="CENTRAL_VENDAS">CENTRAL DE VENDAS</option>
-                        <option value="SUPORTE_ADM">SUPORTE ADM</option>
-                        <option value="FRANQUIAS_DISTRIBUIDORES">FRANQUIAS / DISTRIBUIDORES</option>
-                        <option value="GERENCIA_CORPORATIVA">GERENCIA_CORPORATIVA</option>
-                        <option value="DIRETORIA_EXECUTIVA">DIRETORIA EXECUTIVA</option>
-                        <option value="INFORMATICA">INFORMÁTICA</option>
-                        <option value="MARKETING">MARKETING</option>
-                        <option value="CERTIFICADO_DIGITAL">CERTIFICADO DIGITAL</option>
-                    </select>
-                    <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
-                        <option value="">Selecione a classificação.</option>
-                        <option value="FUNCIONARIO">FUNCIONÁRIO</option>
-                        <option value="ESTAGIARIO">ESTAGIÁRIO</option>
-                        <option value="MEI">MEI</option>
-                    </select>
-                </div>
-
-                <div class="item2" id="noprint">    
-                    <label >Data inicial:</label>    
-                    <input type="date" name="data_inicial" id="data_inicial" class="form-control">
-                    <label >Data final:</label>
-                    <input type="date" name="data_final" id="data_final" class="form-control">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" name="buscar" type="text" placeholder="Digite o nome do colaborador..."
+                        aria-label="Digite o nome" aria-describedby="basic-addon2">
                     
-                    <button class="btn btn-primary" type="submit">Filtrar</button>
-                </div>
-            </div>    
+                            <button class="btn btn-outline-secondary" type="submit">
+                                Pesquisar
+                                <img class="busca__icone" src="{% static '/assets/icons/search.png' %}"
+                                alt="ícone de search">
+                            </button>
+                    </div>
+                </div>               
+            </div>               
+        </form>
+
+        <form action="{% url 'colaboradores_por_departamento' %}">        
+            <button type="submit" class="btn btn-primary">relatorio geral</button> 
         </form>
         
-        <div class="filtroform">
-            <form action="{% url 'colaboradores_por_departamento' %}">        
-                <button type="submit" class="btn btn-primary">relatorio geral</button> 
-            </form>
-        </div>
+        <div>
+            <button onclick="window.print()" class="btn btn-primary">Imprimir</button>
+        </div> 
+        
 
     </div>
-   
+
+
+    <form method="POST" action="{% url 'colaborador-lista' %}" class="filtroform" id="noprint">
+        {% csrf_token %}
+        <select class="form-select" aria-label="Default select example" name="departamento" id="departamento">
+            <option value="">Selecione o Departamento.</option>
+            {% for valor, nome in opcoes_departamentos %}
+                <option value="{{ valor }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+
+        <select class="form-select" aria-label="Default select example" name="classificacao" id="classificacao">
+            <option value="">Selecione a classificação.</option>
+            {% for valor, nome in opcoes_classificacao %}
+                <option value="{{ valor }}">{{ nome }}</option>
+            {% endfor %}
+        </select>
+
+            <label class="meu-label">Data Inicial:</label>    
+            <input type="date" name="data_inicial" id="data_inicial" class="form-control">
+            <label class="meu-label">Data Final:</label>
+            <input type="date" name="data_final" id="data_final" class="form-control">
+            <button class="btn btn-primary" type="submit">Filtrar</button>
+
+    </form>
+    <!-- filtros -->
     <h6>Total de Colaboradores: {{quantidade}}</h6>
+    <br>
     <table class="table">
         <thead>
             <tr>
@@ -128,11 +111,7 @@
             {% endfor %}
         </tbody>
     </table>
-  
-    <div id="noprint" class="editPrint">
-        <div><button onclick="window.print()" class="btn btn-primary">Imprimir</button></div> 
-    </div>
-<br>
+    <br>
     <div id="noprint" class="editPrint">
         
         <nav aria-label="Page navigation example">
@@ -154,8 +133,6 @@
         </ul>
     </nav>
     </div>
-
-    
 
 </div>
 {% endblock %}

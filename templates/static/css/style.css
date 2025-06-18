@@ -72,7 +72,6 @@
     width: 100%;
     display:inline-flex;
     flex-direction: column;
-
   }
   .form-colaborador h1{
     width: 100%;
@@ -84,35 +83,26 @@
     flex-direction: column;
     text-align: left;
   }
-  .filtroform {
+  .filtroform-busca{
+    width: 100%;
     display: flex;
-    gap: 20px;
-    margin: 20px 0px 20px 0px;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
  }
- .item1{
-  width: 40%;
-  display: inline-flex;
-  gap: 20px;
+  #principal-item-filtroform-busca {
+  flex-grow: 3;
+  }  
+  .filtroform{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 20px;
  }
- .item2 {
-  width: 45%;
-  display: inline-flex;
-  gap: 3px;
- }
- .item2 input{
-  max-width: 200px;
- }
- .item2 label{
+ .filtroform label{
   color: #fffdfd;
- }
- .item2 button{
-  margin-left: 10px;
- }
-  select{
-    width: max-content;
-    padding: 5px;
-    border-radius: 5px;
-  }
+ }  
   .foto{
     max-width:100px;
     max-height:140px;
@@ -184,9 +174,7 @@
   .auth-card li{
     color: black;
   }
-  .pagination{
-    
-  }
+ 
   @media print { 
     #noprint { display:none !important;
       } 

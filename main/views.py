@@ -36,9 +36,17 @@ def colaboradorView(request):
         colaboradores_por_pagina = paginador.get_page(numero_pagina)
 
         contador = colaboradores.count()
-        user = request.user.username        
+        user = request.user.username 
+
+        opcoes_departamentos = Colaborador.OPCOES_DEPARTAMENTOS
+        opcoes_classificacao = Colaborador.OPCOES_CLASSIFICACAO
+
         return render(request, 'main/colaborador.html', {
-            'colaboradores_list': colaboradores_por_pagina, 'quantidade': contador, 'username': user
+            'colaboradores_list': colaboradores_por_pagina, 
+            'quantidade': contador, 
+            'username': user, 
+            'opcoes_departamentos':opcoes_departamentos,
+            'opcoes_classificacao':opcoes_classificacao 
             })
     
     if request.method == 'POST':
